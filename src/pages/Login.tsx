@@ -52,6 +52,17 @@ const Login = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
+        {/* Back to Home Link */}
+        <div className="text-center mb-4">
+          <button 
+            onClick={() => navigate('/')}
+            className="text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center justify-center space-x-1 mx-auto"
+          >
+            <span>←</span>
+            <span>Back to Home</span>
+          </button>
+        </div>
+
         {/* Logo */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center space-x-2 mb-4">

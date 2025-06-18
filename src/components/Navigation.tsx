@@ -33,7 +33,12 @@ export const Navigation = () => {
               <ShoppingBag className="w-4 h-4" />
               <span>Shop</span>
             </button>
-            <a href="#contact" className="text-gray-700 hover:text-blue-600 transition-colors">Contact</a>
+            <button 
+              onClick={() => navigate('/contact')}
+              className="text-gray-700 hover:text-blue-600 transition-colors"
+            >
+              Contact
+            </button>
           </div>
 
           {/* Auth Buttons */}
@@ -76,7 +81,12 @@ export const Navigation = () => {
             >
               Shop
             </button>
-            <a href="#contact" className="block text-gray-700 hover:text-blue-600 transition-colors">Contact</a>
+            <button 
+              onClick={() => navigate('/contact')}
+              className="block text-gray-700 hover:text-blue-600 transition-colors"
+            >
+              Contact
+            </button>
             <div className="pt-4 space-y-2">
               <Button 
                 variant="outline" 

@@ -1,0 +1,100 @@
+
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Menu, X, ShoppingBag, Truck, Users } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+
+export const Navigation = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
+
+  return (
+    <nav className="bg-white/95 backdrop-blur-sm border-b border-blue-100 sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          {/* Logo */}
+          <div className="flex items-center space-x-2">
+            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+              <Truck className="w-5 h-5 text-white" />
+            </div>
+            <span className="text-xl font-bold text-gray-900">WashEasy</span>
+            <Badge variant="secondary" className="text-xs">BETA</Badge>
+          </div>
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-8">
+            <a href="#services" className="text-gray-700 hover:text-blue-600 transition-colors">Services</a>
+            <a href="#how-it-works" className="text-gray-700 hover:text-blue-600 transition-colors">How it Works</a>
+            <button 
+              onClick={() => navigate('/shop')}
+              className="text-gray-700 hover:text-blue-600 transition-colors flex items-center space-x-1"
+            >
+              <ShoppingBag className="w-4 h-4" />
+              <span>Shop</span>
+            </button>
+            <a href="#contact" className="text-gray-700 hover:text-blue-600 transition-colors">Contact</a>
+          </div>
+
+          {/* Auth Buttons */}
+          <div className="hidden md:flex items-center space-x-4">
+            <Button 
+              variant="ghost" 
+              onClick={() => navigate('/login')}
+              className="text-gray-700 hover:text-blue-600"
+            >
+              Sign In
+            </Button>
+            <Button 
+              onClick={() => navigate('/register')}
+              className="bg-blue-600 hover:bg-blue-700"
+            >
+              Get Started
+            </Button>
+          </div>
+
+          {/* Mobile menu button */}
+          <div className="md:hidden">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </Button>
+          </div>
+        </div>
+
+        {/* Mobile Navigation */}
+        {isMenuOpen && (
+          <div className="md:hidden py-4 space-y-4 border-t border-blue-100">
+            <a href="#services" className="block text-gray-700 hover:text-blue-600 transition-colors">Services</a>
+            <a href="#how-it-works" className="block text-gray-700 hover:text-blue-600 transition-colors">How it Works</a>
+            <button 
+              onClick={() => navigate('/shop')}
+              className="block text-gray-700 hover:text-blue-600 transition-colors"
+            >
+              Shop
+            </button>
+            <a href="#contact" className="block text-gray-700 hover:text-blue-600 transition-colors">Contact</a>
+            <div className="pt-4 space-y-2">
+              <Button 
+                variant="outline" 
+                className="w-full"
+                onClick={() => navigate('/login')}
+              >
+                Sign In
+              </Button>
+              <Button 
+                className="w-full bg-blue-600 hover:bg-blue-700"
+                onClick={() => navigate('/register')}
+              >
+                Get Started
+              </Button>
+            </div>
+          </div>
+        )}
+      </div>
+    </nav>
+  );
+};

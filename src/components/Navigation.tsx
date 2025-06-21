@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Menu, X, ShoppingBag, Truck, Users } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { AuthButton } from "@/components/AuthButton";
 
 export const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -41,21 +42,9 @@ export const Navigation = () => {
             </button>
           </div>
 
-          {/* Auth Buttons */}
-          <div className="hidden md:flex items-center space-x-4">
-            <Button 
-              variant="ghost" 
-              onClick={() => navigate('/login')}
-              className="text-gray-700 hover:text-blue-600"
-            >
-              Sign In
-            </Button>
-            <Button 
-              onClick={() => navigate('/register')}
-              className="bg-blue-600 hover:bg-blue-700"
-            >
-              Get Started
-            </Button>
+          {/* Auth Button */}
+          <div className="hidden md:flex items-center">
+            <AuthButton />
           </div>
 
           {/* Mobile menu button */}
@@ -87,20 +76,8 @@ export const Navigation = () => {
             >
               Contact
             </button>
-            <div className="pt-4 space-y-2">
-              <Button 
-                variant="outline" 
-                className="w-full"
-                onClick={() => navigate('/login')}
-              >
-                Sign In
-              </Button>
-              <Button 
-                className="w-full bg-blue-600 hover:bg-blue-700"
-                onClick={() => navigate('/register')}
-              >
-                Get Started
-              </Button>
+            <div className="pt-4">
+              <AuthButton />
             </div>
           </div>
         )}

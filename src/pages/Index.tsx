@@ -10,6 +10,7 @@ import { LaundryBenefits } from "@/components/LaundryBenefits";
 import { TestimonialsSection } from "@/components/TestimonialsSection";
 import { ServiceAreas } from "@/components/ServiceAreas";
 import { Footer } from "@/components/Footer";
+import { OrderForm } from "@/components/OrderForm";
 
 const Index = () => {
   return (
@@ -19,6 +20,18 @@ const Index = () => {
       <LaundryBenefits />
       <ServiceCards />
       <HowItWorks />
+      
+      {/* Order Form Section */}
+      <section className="py-16 px-4 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Ready to Get Started?</h2>
+            <p className="text-xl text-gray-600">Place your first order and experience the convenience</p>
+          </div>
+          <OrderForm />
+        </div>
+      </section>
+
       <ServiceAreas />
       <TestimonialsSection />
       
@@ -82,7 +95,7 @@ const Index = () => {
             <p>✓ No setup fees ✓ Cancel anytime ✓ 100% satisfaction guarantee</p>
           </div>
         </div>
-      </section>
+      </Section>
 
       <Footer />
     </div>

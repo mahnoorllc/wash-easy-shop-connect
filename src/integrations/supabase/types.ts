@@ -9,7 +9,203 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      laundry_orders: {
+        Row: {
+          created_at: string | null
+          customer_id: string
+          delivery_address: string | null
+          estimated_weight: number | null
+          id: string
+          merchant_id: string | null
+          pickup_address: string
+          pickup_date: string
+          pickup_time: string
+          service_type: Database["public"]["Enums"]["service_type"]
+          special_instructions: string | null
+          status: Database["public"]["Enums"]["order_status"] | null
+          total_amount: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          customer_id: string
+          delivery_address?: string | null
+          estimated_weight?: number | null
+          id?: string
+          merchant_id?: string | null
+          pickup_address: string
+          pickup_date: string
+          pickup_time: string
+          service_type: Database["public"]["Enums"]["service_type"]
+          special_instructions?: string | null
+          status?: Database["public"]["Enums"]["order_status"] | null
+          total_amount?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          customer_id?: string
+          delivery_address?: string | null
+          estimated_weight?: number | null
+          id?: string
+          merchant_id?: string | null
+          pickup_address?: string
+          pickup_date?: string
+          pickup_time?: string
+          service_type?: Database["public"]["Enums"]["service_type"]
+          special_instructions?: string | null
+          status?: Database["public"]["Enums"]["order_status"] | null
+          total_amount?: number | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "laundry_orders_merchant_id_fkey"
+            columns: ["merchant_id"]
+            isOneToOne: false
+            referencedRelation: "merchants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      merchants: {
+        Row: {
+          business_address: string
+          business_name: string
+          created_at: string | null
+          email: string
+          id: string
+          is_active: boolean | null
+          is_approved: boolean | null
+          phone: string
+          service_areas: string[] | null
+          services: Database["public"]["Enums"]["service_type"][] | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          business_address: string
+          business_name: string
+          created_at?: string | null
+          email: string
+          id?: string
+          is_active?: boolean | null
+          is_approved?: boolean | null
+          phone: string
+          service_areas?: string[] | null
+          services?: Database["public"]["Enums"]["service_type"][] | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          business_address?: string
+          business_name?: string
+          created_at?: string | null
+          email?: string
+          id?: string
+          is_active?: boolean | null
+          is_approved?: boolean | null
+          phone?: string
+          service_areas?: string[] | null
+          services?: Database["public"]["Enums"]["service_type"][] | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          address: string | null
+          created_at: string | null
+          full_name: string | null
+          id: string
+          phone: string | null
+          role: Database["public"]["Enums"]["user_role"] | null
+          updated_at: string | null
+        }
+        Insert: {
+          address?: string | null
+          created_at?: string | null
+          full_name?: string | null
+          id: string
+          phone?: string | null
+          role?: Database["public"]["Enums"]["user_role"] | null
+          updated_at?: string | null
+        }
+        Update: {
+          address?: string | null
+          created_at?: string | null
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+          role?: Database["public"]["Enums"]["user_role"] | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      shop_orders: {
+        Row: {
+          created_at: string | null
+          customer_id: string
+          delivery_address: string
+          id: string
+          items: Json
+          status: string | null
+          total_amount: number
+        }
+        Insert: {
+          created_at?: string | null
+          customer_id: string
+          delivery_address: string
+          id?: string
+          items: Json
+          status?: string | null
+          total_amount: number
+        }
+        Update: {
+          created_at?: string | null
+          customer_id?: string
+          delivery_address?: string
+          id?: string
+          items?: Json
+          status?: string | null
+          total_amount?: number
+        }
+        Relationships: []
+      }
+      shop_products: {
+        Row: {
+          category: string | null
+          created_at: string | null
+          description: string | null
+          id: string
+          image_url: string | null
+          is_active: boolean | null
+          name: string
+          price: number
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean | null
+          name: string
+          price: number
+        }
+        Update: {
+          category?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean | null
+          name?: string
+          price?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -18,7 +214,16 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      order_status:
+        | "pending"
+        | "confirmed"
+        | "picked_up"
+        | "in_progress"
+        | "ready"
+        | "delivered"
+        | "cancelled"
+      service_type: "wash_fold" | "dry_cleaning" | "express" | "delicate"
+      user_role: "customer" | "merchant" | "admin"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -133,6 +338,18 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      order_status: [
+        "pending",
+        "confirmed",
+        "picked_up",
+        "in_progress",
+        "ready",
+        "delivered",
+        "cancelled",
+      ],
+      service_type: ["wash_fold", "dry_cleaning", "express", "delicate"],
+      user_role: ["customer", "merchant", "admin"],
+    },
   },
 } as const

@@ -95,7 +95,7 @@ const Index = () => {
             <p>✓ No setup fees ✓ Cancel anytime ✓ 100% satisfaction guarantee</p>
           </div>
         </div>
-      </Section>
+      </section>
 
       <Footer />
     </div>

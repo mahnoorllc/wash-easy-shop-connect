@@ -2,13 +2,15 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Menu, X, ShoppingBag, Truck, Users } from "lucide-react";
+import { Menu, X, ShoppingBag, Truck, Users, LayoutDashboard } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { AuthButton } from "@/components/AuthButton";
+import { useAuth } from "@/contexts/AuthContext";
 
 export const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   return (
     <nav className="bg-white/95 backdrop-blur-sm border-b border-blue-100 sticky top-0 z-50">
@@ -34,6 +36,15 @@ export const Navigation = () => {
               <ShoppingBag className="w-4 h-4" />
               <span>Shop</span>
             </button>
+            {user && (
+              <button 
+                onClick={() => navigate('/customer-dashboard')}
+                className="text-gray-700 hover:text-blue-600 transition-colors flex items-center space-x-1"
+              >
+                <LayoutDashboard className="w-4 h-4" />
+                <span>Dashboard</span>
+              </button>
+            )}
             <button 
               onClick={() => navigate('/contact')}
               className="text-gray-700 hover:text-blue-600 transition-colors"
@@ -70,6 +81,14 @@ export const Navigation = () => {
             >
               Shop
             </button>
+            {user && (
+              <button 
+                onClick={() => navigate('/customer-dashboard')}
+                className="block text-gray-700 hover:text-blue-600 transition-colors"
+              >
+                Dashboard
+              </button>
+            )}
             <button 
               onClick={() => navigate('/contact')}
               className="block text-gray-700 hover:text-blue-600 transition-colors"

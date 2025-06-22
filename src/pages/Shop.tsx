@@ -6,12 +6,14 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Navigation } from "@/components/Navigation";
+import { CheckoutDialog } from "@/components/CheckoutDialog";
 import { ShoppingBag, Search, Filter, Star, Plus, Minus } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { useProducts } from "@/hooks/useProducts";
+import { useShopCart } from "@/hooks/useShopCart";
 
 const Shop = () => {
-  const { toast } = useToast();
-  const [cart, setCart] = useState<{[key: string]: number}>({});
+  const { products, loading, error } = useProducts();
+  const { cart, addToCart, removeFromCart, getTotalItems, getTotalPrice, submitOrder, isSubmitting } = useShopCart();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
 
@@ -24,121 +26,27 @@ const Shop = () => {
     { value: "hangers", label: "Hangers" }
   ];
 
-  const products = [
-    {
-      id: "1",
-      name: "Premium Liquid Detergent",
-      description: "High-efficiency concentrated detergent for all fabric types",
-      category: "detergents",
-      price: 24.99,
-      image: "/placeholder.svg",
-      rating: 4.8,
-      reviews: 156,
-      stock: 45,
-      features: ["Concentrated formula", "Eco-friendly", "All fabric types"]
-    },
-    {
-      id: "2",
-      name: "Luxury Fabric Softener",
-      description: "Premium fabric softener with long-lasting freshness",
-      category: "softeners",
-      price: 18.99,
-      image: "/placeholder.svg",
-      rating: 4.9,
-      reviews: 203,
-      stock: 32,
-      features: ["Long-lasting scent", "Gentle on skin", "Reduces static"]
-    },
-    {
-      id: "3",
-      name: "Mesh Laundry Bag Set",
-      description: "Set of 3 premium mesh bags for delicate items",
-      category: "bags",
-      price: 15.99,
-      image: "/placeholder.svg",
-      rating: 4.7,
-      reviews: 89,
-      stock: 78,
-      features: ["3 different sizes", "Durable mesh", "Zipper closure"]
-    },
-    {
-      id: "4",
-      name: "Stain Remover Spray",
-      description: "Powerful stain remover for tough stains",
-      category: "accessories",
-      price: 12.99,
-      image: "/placeholder.svg",
-      rating: 4.6,
-      reviews: 124,
-      stock: 56,
-      features: ["Works on all stains", "Safe for colors", "Easy spray bottle"]
-    },
-    {
-      id: "5",
-      name: "Premium Wooden Hangers",
-      description: "Set of 10 solid wood hangers with non-slip coating",
-      category: "hangers",
-      price: 29.99,
-      image: "/placeholder.svg",
-      rating: 4.9,
-      reviews: 78,
-      stock: 23,
-      features: ["Solid wood", "Non-slip coating", "Contoured shape"]
-    },
-    {
-      id: "6",
-      name: "Color-Safe Bleach",
-      description: "Gentle bleach alternative safe for colored fabrics",
-      category: "detergents",
-      price: 16.99,
-      image: "/placeholder.svg",
-      rating: 4.5,
-      reviews: 67,
-      stock: 41,
-      features: ["Color-safe formula", "Brightens whites", "Removes odors"]
-    }
-  ];
-
   const filteredProducts = products.filter(product => {
     const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         product.description.toLowerCase().includes(searchTerm.toLowerCase());
+                         (product.description || '').toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === "all" || product.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
 
-  const addToCart = (productId: string) => {
-    setCart(prev => ({
-      ...prev,
-      [productId]: (prev[productId] || 0) + 1
-    }));
-    toast({
-      title: "Added to Cart",
-      description: "Product has been added to your cart",
-    });
+  const handleCheckout = async (deliveryAddress: string) => {
+    return await submitOrder(products, deliveryAddress);
   };
 
-  const removeFromCart = (productId: string) => {
-    setCart(prev => {
-      const newCart = { ...prev };
-      if (newCart[productId] > 1) {
-        newCart[productId]--;
-      } else {
-        delete newCart[productId];
-      }
-      return newCart;
-    });
-  };
-
-  const getTotalItems = () => {
-    return Object.values(cart).reduce((sum, count) => sum + count, 0);
-  };
-
-  const getTotalPrice = () => {
-    return Object.entries(cart).reduce((sum, [productId, count]) => {
-      const product = products.find(p => p.id === productId);
-      return sum + (product ? product.price * count : 0);
-    }, 0);
-  };
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50">
+        <Navigation />
+        <div className="flex items-center justify-center min-h-[60vh]">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50">
@@ -162,16 +70,25 @@ const Shop = () => {
                   </div>
                   <div className="text-right">
                     <div className="text-sm text-gray-600">Total</div>
-                    <div className="font-bold text-blue-600">${getTotalPrice().toFixed(2)}</div>
+                    <div className="font-bold text-blue-600">${getTotalPrice(products).toFixed(2)}</div>
                   </div>
-                  <Button className="bg-blue-600 hover:bg-blue-700">
-                    Checkout
-                  </Button>
+                  <CheckoutDialog
+                    totalPrice={getTotalPrice(products)}
+                    totalItems={getTotalItems()}
+                    onCheckout={handleCheckout}
+                    isSubmitting={isSubmitting}
+                  />
                 </div>
               </CardContent>
             </Card>
           )}
         </div>
+
+        {error && (
+          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+            <p className="text-red-600">{error}</p>
+          </div>
+        )}
 
         {/* Filters */}
         <div className="flex flex-col md:flex-row gap-4 mb-8">
@@ -205,15 +122,10 @@ const Shop = () => {
             <Card key={product.id} className="border-0 shadow-lg hover:shadow-xl transition-shadow">
               <div className="aspect-square bg-gray-100 rounded-t-lg relative overflow-hidden">
                 <img 
-                  src={product.image} 
+                  src={product.image_url || "/placeholder.svg"} 
                   alt={product.name}
                   className="w-full h-full object-cover"
                 />
-                {product.stock < 30 && (
-                  <Badge className="absolute top-3 right-3 bg-orange-100 text-orange-800">
-                    Low Stock
-                  </Badge>
-                )}
               </div>
               
               <CardHeader className="pb-3">
@@ -223,35 +135,24 @@ const Shop = () => {
                   </CardTitle>
                   <div className="text-right">
                     <div className="text-xl font-bold text-blue-600">
-                      ${product.price}
+                      ${Number(product.price).toFixed(2)}
                     </div>
                   </div>
                 </div>
-                <CardDescription className="text-sm text-gray-600 line-clamp-2">
-                  {product.description}
-                </CardDescription>
+                {product.description && (
+                  <CardDescription className="text-sm text-gray-600 line-clamp-2">
+                    {product.description}
+                  </CardDescription>
+                )}
               </CardHeader>
 
               <CardContent className="space-y-4">
-                {/* Rating */}
-                <div className="flex items-center justify-between text-sm">
-                  <div className="flex items-center space-x-1">
-                    <Star className="w-4 h-4 text-yellow-500 fill-current" />
-                    <span className="font-medium">{product.rating}</span>
-                    <span className="text-gray-500">({product.reviews})</span>
-                  </div>
-                  <span className="text-gray-500">{product.stock} in stock</span>
-                </div>
-
-                {/* Features */}
-                <div className="space-y-1">
-                  {product.features.slice(0, 2).map((feature, idx) => (
-                    <div key={idx} className="flex items-center space-x-2 text-xs text-gray-600">
-                      <div className="w-1 h-1 bg-blue-600 rounded-full"></div>
-                      <span>{feature}</span>
-                    </div>
-                  ))}
-                </div>
+                {/* Category */}
+                {product.category && (
+                  <Badge variant="secondary" className="text-xs">
+                    {product.category}
+                  </Badge>
+                )}
 
                 {/* Add to Cart */}
                 <div className="flex items-center justify-between">
@@ -285,16 +186,13 @@ const Shop = () => {
                       Add to Cart
                     </Button>
                   )}
-                  <Button variant="outline" size="sm">
-                    View Details
-                  </Button>
                 </div>
               </CardContent>
             </Card>
           ))}
         </div>
 
-        {filteredProducts.length === 0 && (
+        {filteredProducts.length === 0 && !loading && (
           <div className="text-center py-12">
             <ShoppingBag className="w-16 h-16 text-gray-300 mx-auto mb-4" />
             <h3 className="text-lg font-semibold text-gray-900 mb-2">No products found</h3>

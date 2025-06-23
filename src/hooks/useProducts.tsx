@@ -14,13 +14,17 @@ export const useProducts = () => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
+        // Remove authentication requirement - fetch products publicly
         const { data, error } = await supabase
           .from('shop_products')
           .select('*')
           .eq('is_active', true)
           .order('name');
 
-        if (error) throw error;
+        if (error) {
+          console.error('Error fetching products:', error);
+          throw error;
+        }
         setProducts(data || []);
       } catch (err) {
         console.error('Error fetching products:', err);

@@ -6,14 +6,18 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Navigation } from "@/components/Navigation";
+import { Footer } from "@/components/Footer";
 import { CheckoutDialog } from "@/components/CheckoutDialog";
-import { ShoppingBag, Search, Filter, Star, Plus, Minus } from "lucide-react";
+import { ShoppingBag, Search, Filter, Plus, Minus, User } from "lucide-react";
 import { useProducts } from "@/hooks/useProducts";
 import { useShopCart } from "@/hooks/useShopCart";
+import { useAuth } from "@/contexts/AuthContext";
+import { Link } from "react-router-dom";
 
 const Shop = () => {
   const { products, loading, error } = useProducts();
   const { cart, addToCart, removeFromCart, getTotalItems, getTotalPrice, submitOrder, isSubmitting } = useShopCart();
+  const { user } = useAuth();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
 
@@ -23,17 +27,22 @@ const Shop = () => {
     { value: "softeners", label: "Fabric Softeners" },
     { value: "accessories", label: "Accessories" },
     { value: "bags", label: "Laundry Bags" },
-    { value: "hangers", label: "Hangers" }
+    { value: "hangers", label: "Hangers" },
+    { value: "care-products", label: "Care Products" }
   ];
 
   const filteredProducts = products.filter(product => {
     const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          (product.description || '').toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === "all" || product.category === selectedCategory;
+    const matchesCategory = selectedCategory === "all" || product.category?.toLowerCase().replace(' ', '-') === selectedCategory;
     return matchesSearch && matchesCategory;
   });
 
   const handleCheckout = async (deliveryAddress: string) => {
+    if (!user) {
+      // This shouldn't happen as CheckoutDialog handles auth, but just in case
+      return false;
+    }
     return await submitOrder(products, deliveryAddress);
   };
 
@@ -44,6 +53,7 @@ const Shop = () => {
         <div className="flex items-center justify-center min-h-[60vh]">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
         </div>
+        <Footer />
       </div>
     );
   }
@@ -54,30 +64,39 @@ const Shop = () => {
       
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Header */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
-          <div className="mb-4 md:mb-0">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Laundry Accessories Shop</h1>
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-8">
+          <div className="mb-4 lg:mb-0">
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Laundry Accessories Shop</h1>
             <p className="text-gray-600">Premium products for all your laundry needs</p>
           </div>
           
           {getTotalItems() > 0 && (
-            <Card className="border-0 shadow-lg">
+            <Card className="border-0 shadow-lg w-full lg:w-auto">
               <CardContent className="p-4">
-                <div className="flex items-center space-x-4">
+                <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4">
                   <div className="flex items-center space-x-2">
                     <ShoppingBag className="w-5 h-5 text-blue-600" />
                     <span className="font-semibold">{getTotalItems()} items</span>
                   </div>
-                  <div className="text-right">
+                  <div className="text-center sm:text-right">
                     <div className="text-sm text-gray-600">Total</div>
                     <div className="font-bold text-blue-600">${getTotalPrice(products).toFixed(2)}</div>
                   </div>
-                  <CheckoutDialog
-                    totalPrice={getTotalPrice(products)}
-                    totalItems={getTotalItems()}
-                    onCheckout={handleCheckout}
-                    isSubmitting={isSubmitting}
-                  />
+                  {user ? (
+                    <CheckoutDialog
+                      totalPrice={getTotalPrice(products)}
+                      totalItems={getTotalItems()}
+                      onCheckout={handleCheckout}
+                      isSubmitting={isSubmitting}
+                    />
+                  ) : (
+                    <Link to="/login">
+                      <Button className="bg-green-600 hover:bg-green-700 w-full sm:w-auto">
+                        <User className="w-4 h-4 mr-2" />
+                        Login to Checkout
+                      </Button>
+                    </Link>
+                  )}
                 </div>
               </CardContent>
             </Card>
@@ -90,7 +109,7 @@ const Shop = () => {
           </div>
         )}
 
-        {/* Filters */}
+        {/* Filters - Mobile Optimized */}
         <div className="flex flex-col md:flex-row gap-4 mb-8">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
@@ -98,7 +117,7 @@ const Shop = () => {
               placeholder="Search products..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10"
+              className="pl-10 text-base" // Larger text for mobile
             />
           </div>
           <Select value={selectedCategory} onValueChange={setSelectedCategory}>
@@ -116,8 +135,8 @@ const Shop = () => {
           </Select>
         </div>
 
-        {/* Products Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Products Grid - Mobile Responsive */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {filteredProducts.map((product) => (
             <Card key={product.id} className="border-0 shadow-lg hover:shadow-xl transition-shadow">
               <div className="aspect-square bg-gray-100 rounded-t-lg relative overflow-hidden">
@@ -130,11 +149,11 @@ const Shop = () => {
               
               <CardHeader className="pb-3">
                 <div className="flex justify-between items-start">
-                  <CardTitle className="text-lg font-semibold line-clamp-2">
+                  <CardTitle className="text-base md:text-lg font-semibold line-clamp-2">
                     {product.name}
                   </CardTitle>
                   <div className="text-right">
-                    <div className="text-xl font-bold text-blue-600">
+                    <div className="text-lg md:text-xl font-bold text-blue-600">
                       ${Number(product.price).toFixed(2)}
                     </div>
                   </div>
@@ -154,7 +173,7 @@ const Shop = () => {
                   </Badge>
                 )}
 
-                {/* Add to Cart */}
+                {/* Add to Cart - Mobile Optimized */}
                 <div className="flex items-center justify-between">
                   {cart[product.id] ? (
                     <div className="flex items-center space-x-3">
@@ -166,7 +185,7 @@ const Shop = () => {
                       >
                         <Minus className="w-4 h-4" />
                       </Button>
-                      <span className="font-semibold">{cart[product.id]}</span>
+                      <span className="font-semibold min-w-[20px] text-center">{cart[product.id]}</span>
                       <Button
                         variant="outline"
                         size="sm"
@@ -179,7 +198,7 @@ const Shop = () => {
                   ) : (
                     <Button
                       onClick={() => addToCart(product.id)}
-                      className="bg-blue-600 hover:bg-blue-700"
+                      className="bg-blue-600 hover:bg-blue-700 w-full sm:w-auto"
                       size="sm"
                     >
                       <Plus className="w-4 h-4 mr-2" />
@@ -200,6 +219,8 @@ const Shop = () => {
           </div>
         )}
       </div>
+      
+      <Footer />
     </div>
   );
 };

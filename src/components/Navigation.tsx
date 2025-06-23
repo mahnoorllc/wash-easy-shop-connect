@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Menu, X, ShoppingBag, Truck, Users, LayoutDashboard } from "lucide-react";
+import { Menu, X, ShoppingBag, Truck, LayoutDashboard } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { AuthButton } from "@/components/AuthButton";
 import { useAuth } from "@/contexts/AuthContext";
@@ -11,6 +11,8 @@ export const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
   const { user } = useAuth();
+
+  const closeMenu = () => setIsMenuOpen(false);
 
   return (
     <nav className="bg-white/95 backdrop-blur-sm border-b border-blue-100 sticky top-0 z-50">
@@ -73,29 +75,50 @@ export const Navigation = () => {
         {/* Mobile Navigation */}
         {isMenuOpen && (
           <div className="md:hidden py-4 space-y-4 border-t border-blue-100">
-            <a href="#services" className="block text-gray-700 hover:text-blue-600 transition-colors">Services</a>
-            <a href="#how-it-works" className="block text-gray-700 hover:text-blue-600 transition-colors">How it Works</a>
+            <a 
+              href="#services" 
+              className="block text-gray-700 hover:text-blue-600 transition-colors py-2"
+              onClick={closeMenu}
+            >
+              Services
+            </a>
+            <a 
+              href="#how-it-works" 
+              className="block text-gray-700 hover:text-blue-600 transition-colors py-2"
+              onClick={closeMenu}
+            >
+              How it Works
+            </a>
             <button 
-              onClick={() => navigate('/shop')}
-              className="block text-gray-700 hover:text-blue-600 transition-colors"
+              onClick={() => {
+                navigate('/shop');
+                closeMenu();
+              }}
+              className="block text-gray-700 hover:text-blue-600 transition-colors py-2 w-full text-left"
             >
               Shop
             </button>
             {user && (
               <button 
-                onClick={() => navigate('/customer-dashboard')}
-                className="block text-gray-700 hover:text-blue-600 transition-colors"
+                onClick={() => {
+                  navigate('/customer-dashboard');
+                  closeMenu();
+                }}
+                className="block text-gray-700 hover:text-blue-600 transition-colors py-2 w-full text-left"
               >
                 Dashboard
               </button>
             )}
             <button 
-              onClick={() => navigate('/contact')}
-              className="block text-gray-700 hover:text-blue-600 transition-colors"
+              onClick={() => {
+                navigate('/contact');
+                closeMenu();
+              }}
+              className="block text-gray-700 hover:text-blue-600 transition-colors py-2 w-full text-left"
             >
               Contact
             </button>
-            <div className="pt-4">
+            <div className="pt-4 border-t border-blue-100">
               <AuthButton />
             </div>
           </div>

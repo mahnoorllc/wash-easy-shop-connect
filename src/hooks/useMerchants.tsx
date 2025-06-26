@@ -1,13 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
-import { Database } from '@/integrations/supabase/types';
-
-type Merchant = Database['public']['Tables']['merchants']['Row'];
-type MerchantWithDistance = Merchant & {
-  distance_km?: number;
-  travel_time_minutes?: number;
-};
+import { MerchantWithDistance } from '@/types/database';
 
 export const useMerchants = () => {
   const [merchants, setMerchants] = useState<MerchantWithDistance[]>([]);
@@ -27,17 +21,19 @@ export const useMerchants = () => {
 
       if (error) throw error;
 
-      let merchantsWithDistance = data || [];
+      let merchantsWithDistance = (data || []) as MerchantWithDistance[];
 
       // Calculate distances if customer location is provided
       if (customerLat && customerLng) {
         merchantsWithDistance = merchantsWithDistance.map(merchant => {
-          if (merchant.latitude && merchant.longitude) {
+          // Use type assertion to access the potentially undefined properties
+          const merchantData = merchant as any;
+          if (merchantData.latitude && merchantData.longitude) {
             const distance = calculateDistance(
               customerLat,
               customerLng,
-              merchant.latitude,
-              merchant.longitude
+              merchantData.latitude,
+              merchantData.longitude
             );
             return {
               ...merchant,

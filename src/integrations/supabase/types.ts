@@ -310,7 +310,44 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      create_booking: {
+        Args: {
+          p_customer_id: string
+          p_merchant_id: string
+          p_laundry_order_id: string
+          p_booking_date: string
+          p_booking_time: string
+          p_customer_address?: string
+          p_notes?: string
+        }
+        Returns: string
+      }
+      get_user_bookings: {
+        Args: { user_id: string }
+        Returns: {
+          id: string
+          customer_id: string
+          merchant_id: string
+          laundry_order_id: string
+          booking_date: string
+          booking_time: string
+          duration_minutes: number
+          status: string
+          customer_latitude: number
+          customer_longitude: number
+          customer_address: string
+          estimated_distance_km: number
+          estimated_travel_time_minutes: number
+          notes: string
+          created_at: string
+          updated_at: string
+          merchant: Json
+        }[]
+      }
+      update_booking_status: {
+        Args: { booking_id: string; new_status: string }
+        Returns: boolean
+      }
     }
     Enums: {
       order_status:

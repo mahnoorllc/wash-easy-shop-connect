@@ -19,9 +19,8 @@ export const useBookings = () => {
 
     try {
       setLoading(true);
-      // Since we can't access the bookings table through the types yet,
-      // we'll use direct SQL queries for now
-      const { data, error } = await supabase.rpc('get_user_bookings', {
+      // Use type assertion to bypass TypeScript issues with RPC calls
+      const { data, error } = await (supabase as any).rpc('get_user_bookings', {
         user_id: user.id
       });
 
@@ -43,8 +42,8 @@ export const useBookings = () => {
 
   const updateBookingStatus = async (bookingId: string, status: string) => {
     try {
-      // Use RPC function to update booking status
-      const { error } = await supabase.rpc('update_booking_status', {
+      // Use type assertion to bypass TypeScript issues with RPC calls
+      const { error } = await (supabase as any).rpc('update_booking_status', {
         booking_id: bookingId,
         new_status: status
       });

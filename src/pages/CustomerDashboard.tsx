@@ -1,253 +1,243 @@
 
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Plus, Package, Clock, MapPin, Star, ShoppingBag, Truck } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { Navigation } from "@/components/Navigation";
-import { useAuth } from "@/contexts/AuthContext";
-import { useOrders } from "@/hooks/useOrders";
-import { getStatusColor, getStatusDisplay, getServiceTypeDisplay, formatDate, formatTime } from "@/utils/orderUtils";
+import React from 'react';
+import { Navigation } from '@/components/Navigation';
+import { Footer } from '@/components/Footer';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { useAuth } from '@/contexts/AuthContext';
+import { useOrders } from '@/hooks/useOrders';
+import { useBookings } from '@/hooks/useBookings';
+import { Calendar, MapPin, Clock, Star, Phone } from 'lucide-react';
+import { format } from 'date-fns';
 
 const CustomerDashboard = () => {
-  const navigate = useNavigate();
   const { user } = useAuth();
-  const { orders, loading, error } = useOrders();
+  const { orders, loading: ordersLoading } = useOrders();
+  const { bookings, loading: bookingsLoading, updateBookingStatus } = useBookings();
 
-  // Filter orders by status
-  const activeOrders = orders.filter(order => 
-    order.status && !['delivered', 'cancelled'].includes(order.status)
-  );
-  const completedOrders = orders.filter(order => 
-    order.status === 'delivered'
-  );
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'pending': return 'bg-yellow-100 text-yellow-800';
+      case 'confirmed': return 'bg-blue-100 text-blue-800';
+      case 'completed': return 'bg-green-100 text-green-800';
+      case 'cancelled': return 'bg-red-100 text-red-800';
+      default: return 'bg-gray-100 text-gray-800';
+    }
+  };
 
-  if (loading) {
+  const handleCancelBooking = async (bookingId: string) => {
+    const success = await updateBookingStatus(bookingId, 'cancelled');
+    if (success) {
+      // Handle success (toast notification would be nice)
+      console.log('Booking cancelled successfully');
+    }
+  };
+
+  if (!user) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50">
+      <div className="min-h-screen bg-gray-50">
         <Navigation />
-        <div className="flex items-center justify-center min-h-[60vh]">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+        <div className="max-w-7xl mx-auto px-4 py-16">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold text-gray-900 mb-4">Access Denied</h1>
+            <p className="text-gray-600">Please sign in to view your dashboard.</p>
+          </div>
         </div>
+        <Footer />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50">
+    <div className="min-h-screen bg-gray-50">
       <Navigation />
       
       <div className="max-w-7xl mx-auto px-4 py-8">
-        {/* Welcome Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Welcome back{user?.user_metadata?.full_name ? `, ${user.user_metadata.full_name}` : ''}!
-          </h1>
-          <p className="text-gray-600">Manage your laundry orders and shop for accessories</p>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome back!</h1>
+          <p className="text-gray-600">Manage your laundry services and bookings</p>
         </div>
 
-        {error && (
-          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-            <p className="text-red-600">{error}</p>
-          </div>
-        )}
+        <div className="grid lg:grid-cols-2 gap-8">
+          {/* Recent Bookings */}
+          <div>
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-semibold text-gray-900">Recent Bookings</h2>
+              <Badge variant="secondary">{bookings.length} total</Badge>
+            </div>
 
-        {/* Quick Actions */}
-        <div className="grid md:grid-cols-3 gap-6 mb-8">
-          <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow cursor-pointer" onClick={() => navigate('/')}>
-            <CardContent className="p-6 text-center space-y-4">
-              <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mx-auto">
-                <Plus className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-gray-900">New Order</h3>
-                <p className="text-sm text-gray-600">Schedule laundry pickup</p>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow cursor-pointer" onClick={() => navigate('/shop')}>
-            <CardContent className="p-6 text-center space-y-4">
-              <div className="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center mx-auto">
-                <ShoppingBag className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-gray-900">Shop</h3>
-                <p className="text-sm text-gray-600">Browse accessories</p>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow cursor-pointer">
-            <CardContent className="p-6 text-center space-y-4">
-              <div className="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center mx-auto">
-                <Truck className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-gray-900">Track Orders</h3>
-                <p className="text-sm text-gray-600">Monitor delivery status</p>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Main Content */}
-        <Tabs defaultValue="active" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-2 max-w-md">
-            <TabsTrigger value="active">Active Orders ({activeOrders.length})</TabsTrigger>
-            <TabsTrigger value="history">Order History ({completedOrders.length})</TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="active" className="space-y-6">
-            <div className="grid gap-6">
-              {activeOrders.length === 0 ? (
-                <Card className="border-0 shadow-lg">
-                  <CardContent className="p-12 text-center space-y-4">
-                    <Package className="w-16 h-16 text-gray-300 mx-auto" />
-                    <div>
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">No Active Orders</h3>
-                      <p className="text-gray-600 mb-6">You don't have any active laundry orders</p>
-                      <Button onClick={() => navigate('/')} className="bg-blue-600 hover:bg-blue-700">
-                        Create New Order
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ) : (
-                activeOrders.map((order) => (
-                  <Card key={order.id} className="border-0 shadow-lg">
-                    <CardHeader className="pb-4">
+            {bookingsLoading ? (
+              <Card>
+                <CardContent className="p-6">
+                  <div className="animate-pulse space-y-4">
+                    <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+                    <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+                    <div className="h-4 bg-gray-200 rounded w-2/3"></div>
+                  </div>
+                </CardContent>
+              </Card>
+            ) : bookings.length === 0 ? (
+              <Card>
+                <CardContent className="p-6 text-center">
+                  <Calendar className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                  <h3 className="text-lg font-medium text-gray-900 mb-2">No bookings yet</h3>
+                  <p className="text-gray-600 mb-4">Your bookings will appear here once you make them.</p>
+                  <Button onClick={() => window.location.href = '/#book-service'}>
+                    Book Your First Service
+                  </Button>
+                </CardContent>
+              </Card>
+            ) : (
+              <div className="space-y-4">
+                {bookings.slice(0, 5).map((booking) => (
+                  <Card key={booking.id}>
+                    <CardHeader className="pb-3">
                       <div className="flex justify-between items-start">
                         <div>
-                          <CardTitle className="text-lg">{getServiceTypeDisplay(order.service_type)}</CardTitle>
-                          <CardDescription className="text-gray-600">
-                            Order #{order.id.slice(0, 8)} {order.estimated_weight && `• ${order.estimated_weight}lbs`}
+                          <CardTitle className="text-lg flex items-center space-x-2">
+                            <span>{booking.merchant?.business_name || 'Merchant'}</span>
+                            {booking.merchant?.rating && (
+                              <div className="flex items-center space-x-1 text-sm text-yellow-500">
+                                <Star className="w-4 h-4 fill-current" />
+                                <span>{booking.merchant.rating}</span>
+                              </div>
+                            )}
+                          </CardTitle>
+                          <CardDescription className="flex items-center space-x-4 mt-1">
+                            <div className="flex items-center space-x-1">
+                              <Calendar className="w-4 h-4" />
+                              <span>{booking.booking_date}</span>
+                            </div>
+                            <div className="flex items-center space-x-1">
+                              <Clock className="w-4 h-4" />
+                              <span>{booking.booking_time}</span>
+                            </div>
                           </CardDescription>
                         </div>
-                        <Badge className={getStatusColor(order.status)}>
-                          {getStatusDisplay(order.status)}
+                        <Badge className={getStatusColor(booking.status)}>
+                          {booking.status}
                         </Badge>
                       </div>
                     </CardHeader>
-                    <CardContent className="space-y-4">
-                      <div className="grid md:grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                          <div className="flex items-center space-x-2 text-sm">
-                            <MapPin className="w-4 h-4 text-gray-400" />
-                            <span className="text-gray-600">Pickup:</span>
-                            <span className="font-medium">{order.pickup_address.slice(0, 30)}...</span>
+                    
+                    <CardContent>
+                      <div className="space-y-2 text-sm text-gray-600">
+                        {booking.customer_address && (
+                          <div className="flex items-center space-x-1">
+                            <MapPin className="w-4 h-4" />
+                            <span>{booking.customer_address}</span>
                           </div>
-                          <div className="flex items-center space-x-2 text-sm">
-                            <Clock className="w-4 h-4 text-gray-400" />
-                            <span className="text-gray-600">Date:</span>
-                            <span className="font-medium">{formatDate(order.pickup_date)} at {formatTime(order.pickup_time)}</span>
+                        )}
+                        {booking.merchant?.phone && (
+                          <div className="flex items-center space-x-1">
+                            <Phone className="w-4 h-4" />
+                            <span>{booking.merchant.phone}</span>
                           </div>
-                        </div>
-                        <div className="space-y-2">
-                          {order.delivery_address && (
-                            <div className="flex items-center space-x-2 text-sm">
-                              <Truck className="w-4 h-4 text-gray-400" />
-                              <span className="text-gray-600">Delivery:</span>
-                              <span className="font-medium">{order.delivery_address.slice(0, 30)}...</span>
-                            </div>
-                          )}
-                          {order.total_amount && (
-                            <div className="flex items-center space-x-2 text-sm">
-                              <span className="text-gray-600">Total:</span>
-                              <span className="font-semibold text-blue-600">${Number(order.total_amount).toFixed(2)}</span>
-                            </div>
-                          )}
-                        </div>
+                        )}
+                        {booking.estimated_distance_km && (
+                          <p>Distance: {booking.estimated_distance_km} km</p>
+                        )}
+                        {booking.notes && (
+                          <p className="italic">Notes: {booking.notes}</p>
+                        )}
                       </div>
-                      {order.special_instructions && (
-                        <div className="pt-2 border-t">
-                          <p className="text-sm text-gray-600">
-                            <strong>Instructions:</strong> {order.special_instructions}
-                          </p>
+                      
+                      {booking.status === 'pending' && (
+                        <div className="mt-4 pt-4 border-t">
+                          <Button 
+                            variant="outline" 
+                            size="sm"
+                            onClick={() => handleCancelBooking(booking.id)}
+                          >
+                            Cancel Booking
+                          </Button>
                         </div>
                       )}
-                      <div className="flex space-x-3">
-                        <Button variant="outline" size="sm">
-                          View Details
-                        </Button>
-                        <Button variant="outline" size="sm">
-                          Contact Support
-                        </Button>
+                      
+                      <div className="mt-2 text-xs text-gray-500">
+                        Booked on {format(new Date(booking.created_at), 'MMM dd, yyyy')}
                       </div>
                     </CardContent>
                   </Card>
-                ))
-              )}
-            </div>
-          </TabsContent>
+                ))}
+              </div>
+            )}
+          </div>
 
-          <TabsContent value="history" className="space-y-6">
-            <div className="grid gap-6">
-              {completedOrders.length === 0 ? (
-                <Card className="border-0 shadow-lg">
-                  <CardContent className="p-12 text-center space-y-4">
-                    <Star className="w-16 h-16 text-gray-300 mx-auto" />
-                    <div>
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">No Order History</h3>
-                      <p className="text-gray-600 mb-6">You haven't completed any orders yet</p>
-                      <Button onClick={() => navigate('/')} className="bg-blue-600 hover:bg-blue-700">
-                        Place Your First Order
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ) : (
-                completedOrders.map((order) => (
-                  <Card key={order.id} className="border-0 shadow-lg">
-                    <CardHeader className="pb-4">
+          {/* Previous Orders */}
+          <div>
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-semibold text-gray-900">Previous Orders</h2>
+              <Badge variant="secondary">{orders.length} total</Badge>
+            </div>
+
+            {ordersLoading ? (
+              <Card>
+                <CardContent className="p-6">
+                  <div className="animate-pulse space-y-4">
+                    <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+                    <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+                    <div className="h-4 bg-gray-200 rounded w-2/3"></div>
+                  </div>
+                </CardContent>
+              </Card>
+            ) : orders.length === 0 ? (
+              <Card>
+                <CardContent className="p-6 text-center">
+                  <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-2xl">📋</span>
+                  </div>
+                  <h3 className="text-lg font-medium text-gray-900 mb-2">No orders yet</h3>
+                  <p className="text-gray-600">Your order history will appear here.</p>
+                </CardContent>
+              </Card>
+            ) : (
+              <div className="space-y-4">
+                {orders.slice(0, 5).map((order) => (
+                  <Card key={order.id}>
+                    <CardHeader className="pb-3">
                       <div className="flex justify-between items-start">
-                        <div>
-                          <CardTitle className="text-lg">{getServiceTypeDisplay(order.service_type)}</CardTitle>
-                          <CardDescription className="text-gray-600">
-                            Order #{order.id.slice(0, 8)} {order.estimated_weight && `• ${order.estimated_weight}lbs`}
-                          </CardDescription>
-                        </div>
-                        <Badge className={getStatusColor(order.status)}>
-                          Completed
+                        <CardTitle className="text-lg">
+                          {order.service_type.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                        </CardTitle>
+                        <Badge className={getStatusColor(order.status || 'pending')}>
+                          {order.status || 'pending'}
                         </Badge>
                       </div>
                     </CardHeader>
-                    <CardContent className="space-y-4">
-                      <div className="grid md:grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                          <div className="flex items-center space-x-2 text-sm">
-                            <Clock className="w-4 h-4 text-gray-400" />
-                            <span className="text-gray-600">Completed:</span>
-                            <span className="font-medium">{formatDate(order.updated_at || order.created_at || '')}</span>
-                          </div>
+                    
+                    <CardContent>
+                      <div className="space-y-2 text-sm text-gray-600">
+                        <div className="flex items-center space-x-1">
+                          <Calendar className="w-4 h-4" />
+                          <span>{order.pickup_date} at {order.pickup_time}</span>
                         </div>
-                        <div className="space-y-2">
-                          {order.total_amount && (
-                            <div className="flex items-center space-x-2 text-sm">
-                              <span className="text-gray-600">Total:</span>
-                              <span className="font-semibold text-blue-600">${Number(order.total_amount).toFixed(2)}</span>
-                            </div>
-                          )}
+                        <div className="flex items-center space-x-1">
+                          <MapPin className="w-4 h-4" />
+                          <span>{order.pickup_address}</span>
                         </div>
+                        {order.estimated_weight && (
+                          <p>Estimated weight: {order.estimated_weight} lbs</p>
+                        )}
+                        {order.total_amount && (
+                          <p className="font-medium">Total: ${order.total_amount}</p>
+                        )}
                       </div>
-                      <div className="flex space-x-3">
-                        <Button variant="outline" size="sm">
-                          Reorder
-                        </Button>
-                        <Button variant="outline" size="sm">
-                          Download Receipt
-                        </Button>
+                      
+                      <div className="mt-2 text-xs text-gray-500">
+                        Ordered on {format(new Date(order.created_at), 'MMM dd, yyyy')}
                       </div>
                     </CardContent>
                   </Card>
-                ))
-              )}
-            </div>
-          </TabsContent>
-        </Tabs>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
       </div>
+      
+      <Footer />
     </div>
   );
 };

@@ -9,6 +9,69 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      commercial_quotes: {
+        Row: {
+          admin_notes: string | null
+          business_address: string
+          business_name: string
+          business_type: string
+          contact_name: string
+          created_at: string | null
+          email: string
+          estimated_weekly_volume: number | null
+          frequency: string
+          id: string
+          phone: string
+          preferred_delivery_time: string | null
+          preferred_pickup_time: string | null
+          quote_amount: number | null
+          service_type: string
+          special_requirements: string | null
+          status: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          admin_notes?: string | null
+          business_address: string
+          business_name: string
+          business_type: string
+          contact_name: string
+          created_at?: string | null
+          email: string
+          estimated_weekly_volume?: number | null
+          frequency: string
+          id?: string
+          phone: string
+          preferred_delivery_time?: string | null
+          preferred_pickup_time?: string | null
+          quote_amount?: number | null
+          service_type: string
+          special_requirements?: string | null
+          status?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          admin_notes?: string | null
+          business_address?: string
+          business_name?: string
+          business_type?: string
+          contact_name?: string
+          created_at?: string | null
+          email?: string
+          estimated_weekly_volume?: number | null
+          frequency?: string
+          id?: string
+          phone?: string
+          preferred_delivery_time?: string | null
+          preferred_pickup_time?: string | null
+          quote_amount?: number | null
+          service_type?: string
+          special_requirements?: string | null
+          status?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       laundry_orders: {
         Row: {
           created_at: string | null
@@ -140,6 +203,42 @@ export type Database = {
           phone?: string | null
           role?: Database["public"]["Enums"]["user_role"] | null
           updated_at?: string | null
+        }
+        Relationships: []
+      }
+      service_pricing: {
+        Row: {
+          base_price: number
+          bulk_discount_percentage: number | null
+          bulk_discount_threshold: number | null
+          created_at: string | null
+          id: string
+          is_active: boolean | null
+          is_commercial: boolean | null
+          pricing_type: string
+          service_name: string
+        }
+        Insert: {
+          base_price: number
+          bulk_discount_percentage?: number | null
+          bulk_discount_threshold?: number | null
+          created_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          is_commercial?: boolean | null
+          pricing_type: string
+          service_name: string
+        }
+        Update: {
+          base_price?: number
+          bulk_discount_percentage?: number | null
+          bulk_discount_threshold?: number | null
+          created_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          is_commercial?: boolean | null
+          pricing_type?: string
+          service_name?: string
         }
         Relationships: []
       }

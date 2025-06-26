@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Menu, X, ShoppingBag, Truck, LayoutDashboard } from "lucide-react";
+import { Menu, X, ShoppingBag, Truck, LayoutDashboard, Building2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { AuthButton } from "@/components/AuthButton";
 import { useAuth } from "@/contexts/AuthContext";
@@ -31,6 +31,13 @@ export const Navigation = () => {
           <div className="hidden md:flex items-center space-x-8">
             <a href="#services" className="text-gray-700 hover:text-blue-600 transition-colors">Services</a>
             <a href="#how-it-works" className="text-gray-700 hover:text-blue-600 transition-colors">How it Works</a>
+            <button 
+              onClick={() => navigate('/commercial-services')}
+              className="text-gray-700 hover:text-blue-600 transition-colors flex items-center space-x-1"
+            >
+              <Building2 className="w-4 h-4" />
+              <span>Commercial</span>
+            </button>
             <button 
               onClick={() => navigate('/shop')}
               className="text-gray-700 hover:text-blue-600 transition-colors flex items-center space-x-1"
@@ -89,6 +96,15 @@ export const Navigation = () => {
             >
               How it Works
             </a>
+            <button 
+              onClick={() => {
+                navigate('/commercial-services');
+                closeMenu();
+              }}
+              className="block text-gray-700 hover:text-blue-600 transition-colors py-2 w-full text-left"
+            >
+              Commercial Services
+            </button>
             <button 
               onClick={() => {
                 navigate('/shop');

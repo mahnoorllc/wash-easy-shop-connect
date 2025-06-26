@@ -2,7 +2,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Truck, ShoppingBag, Users, Clock, Star, Shield } from "lucide-react";
+import { Truck, ShoppingBag, Users, Clock, Star, Shield, Building2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export const ServiceCards = () => {
@@ -28,13 +28,13 @@ export const ServiceCards = () => {
       action: () => navigate('/shop')
     },
     {
-      icon: <Users className="w-8 h-8 text-purple-600" />,
-      title: "Partner Program",
-      description: "Join our network of laundry service providers and grow your business",
-      features: ["Flexible schedule", "Guaranteed income", "Business support"],
-      price: "Earn up to $5k/month",
-      badge: "Opportunity",
-      action: () => navigate('/merchant-register')
+      icon: <Building2 className="w-8 h-8 text-purple-600" />,
+      title: "Commercial Services",
+      description: "Bulk laundry solutions for businesses, hotels, and restaurants",
+      features: ["Custom pricing", "Flexible scheduling", "Volume discounts"],
+      price: "Get Custom Quote",
+      badge: "Enterprise",
+      action: () => navigate('/commercial-services')
     }
   ];
 
@@ -46,7 +46,7 @@ export const ServiceCards = () => {
             Everything You Need for Perfect Laundry
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            From professional cleaning services to premium accessories, we've got your laundry needs covered
+            From personal cleaning services to commercial solutions and premium accessories
           </p>
         </div>
 

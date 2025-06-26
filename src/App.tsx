@@ -13,6 +13,7 @@ import Register from "./pages/Register";
 import CustomerDashboard from "./pages/CustomerDashboard";
 import Shop from "./pages/Shop";
 import Contact from "./pages/Contact";
+import CommercialServices from "./pages/CommercialServices";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -35,6 +36,7 @@ const App = () => (
               </ProtectedRoute>
             } />
             <Route path="/shop" element={<Shop />} />
+            <Route path="/commercial-services" element={<CommercialServices />} />
             <Route path="/contact" element={<Contact />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

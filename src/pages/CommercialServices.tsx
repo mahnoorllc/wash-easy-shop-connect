@@ -20,19 +20,20 @@ const CommercialServices = () => {
   
   const [quoteForm, setQuoteForm] = useState({
     business_name: '',
-    contact_person: '',
+    contact_name: '',
     email: '',
     phone: '',
     business_type: '',
     service_type: '',
-    estimated_volume: '',
+    estimated_weekly_volume: '',
     frequency: '',
-    special_requirements: ''
+    special_requirements: '',
+    business_address: ''
   });
 
   const [calculatorForm, setCalculatorForm] = useState({
-    service_type: 'laundry',
-    category: 'weight_based',
+    service_name: 'Laundry Service',
+    pricing_type: 'weight_based',
     quantity: ''
   });
 
@@ -45,8 +46,16 @@ const CommercialServices = () => {
       const { error } = await supabase
         .from('commercial_quotes')
         .insert([{
-          ...quoteForm,
-          estimated_volume: parseInt(quoteForm.estimated_volume) || 0,
+          business_name: quoteForm.business_name,
+          contact_name: quoteForm.contact_name,
+          email: quoteForm.email,
+          phone: quoteForm.phone,
+          business_type: quoteForm.business_type,
+          service_type: quoteForm.service_type,
+          estimated_weekly_volume: parseInt(quoteForm.estimated_weekly_volume) || 0,
+          frequency: quoteForm.frequency,
+          special_requirements: quoteForm.special_requirements,
+          business_address: quoteForm.business_address || 'Not provided',
           status: 'pending'
         }]);
 
@@ -60,14 +69,15 @@ const CommercialServices = () => {
       // Reset form
       setQuoteForm({
         business_name: '',
-        contact_person: '',
+        contact_name: '',
         email: '',
         phone: '',
         business_type: '',
         service_type: '',
-        estimated_volume: '',
+        estimated_weekly_volume: '',
         frequency: '',
-        special_requirements: ''
+        special_requirements: '',
+        business_address: ''
       });
     } catch (error) {
       console.error('Error submitting quote:', error);
@@ -83,14 +93,14 @@ const CommercialServices = () => {
     if (!calculatorForm.quantity || pricingLoading) return;
 
     const relevantPricing = pricing.find(p => 
-      p.service_type === calculatorForm.service_type && 
-      p.category === calculatorForm.category
+      p.service_name === calculatorForm.service_name && 
+      p.pricing_type === calculatorForm.pricing_type
     );
 
     if (relevantPricing) {
       const quantity = parseFloat(calculatorForm.quantity);
       const basePrice = quantity * relevantPricing.base_price;
-      const discount = basePrice * (relevantPricing.bulk_discount_percent / 100);
+      const discount = basePrice * ((relevantPricing.bulk_discount_percentage || 0) / 100);
       setEstimatedPrice(basePrice - discount);
     }
   };
@@ -193,25 +203,25 @@ const CommercialServices = () => {
             <CardContent className="space-y-6">
               <div className="grid md:grid-cols-3 gap-4">
                 <div>
-                  <Label htmlFor="service_type">Service Type</Label>
-                  <Select value={calculatorForm.service_type} onValueChange={(value) => 
-                    setCalculatorForm(prev => ({ ...prev, service_type: value }))
+                  <Label htmlFor="service_name">Service Type</Label>
+                  <Select value={calculatorForm.service_name} onValueChange={(value) => 
+                    setCalculatorForm(prev => ({ ...prev, service_name: value }))
                   }>
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="laundry">Laundry Service</SelectItem>
-                      <SelectItem value="dry_cleaning">Dry Cleaning</SelectItem>
-                      <SelectItem value="specialty">Specialty Items</SelectItem>
+                      <SelectItem value="Laundry Service">Laundry Service</SelectItem>
+                      <SelectItem value="Dry Cleaning">Dry Cleaning</SelectItem>
+                      <SelectItem value="Specialty Items">Specialty Items</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
 
                 <div>
-                  <Label htmlFor="category">Pricing Category</Label>
-                  <Select value={calculatorForm.category} onValueChange={(value) => 
-                    setCalculatorForm(prev => ({ ...prev, category: value }))
+                  <Label htmlFor="pricing_type">Pricing Type</Label>
+                  <Select value={calculatorForm.pricing_type} onValueChange={(value) => 
+                    setCalculatorForm(prev => ({ ...prev, pricing_type: value }))
                   }>
                     <SelectTrigger>
                       <SelectValue />
@@ -227,7 +237,7 @@ const CommercialServices = () => {
                   <Label htmlFor="quantity">Quantity</Label>
                   <Input
                     type="number"
-                    placeholder={calculatorForm.category === 'weight_based' ? 'Weight in lbs' : 'Number of pieces'}
+                    placeholder={calculatorForm.pricing_type === 'weight_based' ? 'Weight in lbs' : 'Number of pieces'}
                     value={calculatorForm.quantity}
                     onChange={(e) => setCalculatorForm(prev => ({ ...prev, quantity: e.target.value }))}
                   />
@@ -274,11 +284,11 @@ const CommercialServices = () => {
                     />
                   </div>
                   <div>
-                    <Label htmlFor="contact_person">Contact Person *</Label>
+                    <Label htmlFor="contact_name">Contact Person *</Label>
                     <Input
                       required
-                      value={quoteForm.contact_person}
-                      onChange={(e) => setQuoteForm(prev => ({ ...prev, contact_person: e.target.value }))}
+                      value={quoteForm.contact_name}
+                      onChange={(e) => setQuoteForm(prev => ({ ...prev, contact_name: e.target.value }))}
                     />
                   </div>
                 </div>
@@ -301,6 +311,14 @@ const CommercialServices = () => {
                       onChange={(e) => setQuoteForm(prev => ({ ...prev, phone: e.target.value }))}
                     />
                   </div>
+                </div>
+
+                <div>
+                  <Label htmlFor="business_address">Business Address</Label>
+                  <Input
+                    value={quoteForm.business_address}
+                    onChange={(e) => setQuoteForm(prev => ({ ...prev, business_address: e.target.value }))}
+                  />
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-4">
@@ -343,11 +361,11 @@ const CommercialServices = () => {
 
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="estimated_volume">Estimated Weekly Volume (lbs)</Label>
+                    <Label htmlFor="estimated_weekly_volume">Estimated Weekly Volume (lbs)</Label>
                     <Input
                       type="number"
-                      value={quoteForm.estimated_volume}
-                      onChange={(e) => setQuoteForm(prev => ({ ...prev, estimated_volume: e.target.value }))}
+                      value={quoteForm.estimated_weekly_volume}
+                      onChange={(e) => setQuoteForm(prev => ({ ...prev, estimated_weekly_volume: e.target.value }))}
                     />
                   </div>
                   <div>

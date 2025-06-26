@@ -18,7 +18,7 @@ export const useServicePricing = () => {
           .from('service_pricing')
           .select('*')
           .eq('is_active', true)
-          .order('service_type, category');
+          .order('service_name, pricing_type');
 
         if (error) {
           console.error('Error fetching service pricing:', error);

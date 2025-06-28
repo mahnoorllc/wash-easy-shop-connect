@@ -43,7 +43,7 @@ export const GoogleMap: React.FC<GoogleMapProps> = ({
           libraries: ['places']
         });
 
-        const google = await loader.load();
+        await loader.load();
         
         // Default to a central location if no customer location
         const center = customerLocation || { lat: 40.7128, lng: -74.0060 }; // NYC default

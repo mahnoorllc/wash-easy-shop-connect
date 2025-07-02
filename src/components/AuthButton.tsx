@@ -1,5 +1,6 @@
 
 import { useAuth } from '@/contexts/AuthContext';
+import { useProfile } from '@/hooks/useProfile';
 import { Button } from '@/components/ui/button';
 import { User, LogOut } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -13,8 +14,9 @@ import {
 
 export const AuthButton = () => {
   const { user, signOut, loading } = useAuth();
+  const { profile, loading: profileLoading } = useProfile();
 
-  if (loading) {
+  if (loading || profileLoading) {
     return <div className="w-8 h-8 animate-pulse bg-gray-200 rounded-full" />;
   }
 
@@ -29,12 +31,14 @@ export const AuthButton = () => {
     );
   }
 
+  const displayName = profile?.full_name || user.email;
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline" className="flex items-center gap-2">
           <User className="w-4 h-4" />
-          {user.email}
+          {displayName}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">

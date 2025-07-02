@@ -2,10 +2,11 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { MapPin } from 'lucide-react';
+import { MapPin, AlertCircle } from 'lucide-react';
 import { useMerchants } from '@/hooks/useMerchants';
 import { GoogleMap } from './GoogleMap';
 import { ApiKeyInput } from './ApiKeyInput';
+import { useGoogleMapsConfig } from '@/hooks/useGoogleMapsConfig';
 
 interface MerchantMapProps {
   onMerchantSelect: (merchantId: string) => void;
@@ -20,16 +21,8 @@ export const MerchantMap: React.FC<MerchantMapProps> = ({
 }) => {
   const [customerLocation, setCustomerLocation] = useState<{lat: number, lng: number} | null>(null);
   const [locationError, setLocationError] = useState<string | null>(null);
-  const [apiKey, setApiKey] = useState<string>('');
   const { merchants, loading, refetchMerchants } = useMerchants();
-
-  // Check for stored API key on component mount
-  useEffect(() => {
-    const storedApiKey = localStorage.getItem('google_maps_api_key');
-    if (storedApiKey) {
-      setApiKey(storedApiKey);
-    }
-  }, []);
+  const { apiKey, loading: configLoading, error: configError, setManualApiKey } = useGoogleMapsConfig();
 
   // Get customer's current location
   const getCurrentLocation = () => {
@@ -70,24 +63,34 @@ export const MerchantMap: React.FC<MerchantMapProps> = ({
     }
   }, [customerAddress]);
 
-  const handleApiKeySubmit = (newApiKey: string) => {
-    setApiKey(newApiKey);
-  };
-
-  if (loading) {
+  if (configLoading || loading) {
     return (
       <div className="flex items-center justify-center p-8">
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p>Loading nearby merchants...</p>
+          <p>Loading map configuration...</p>
         </div>
       </div>
     );
   }
 
-  // Show API key input if not provided
+  // Show API key input as fallback if server config fails
   if (!apiKey) {
-    return <ApiKeyInput onApiKeySubmit={handleApiKeySubmit} />;
+    return (
+      <div className="space-y-4">
+        {configError && (
+          <Card className="border-orange-200 bg-orange-50">
+            <CardContent className="p-4">
+              <div className="flex items-center space-x-2 text-orange-700">
+                <AlertCircle className="w-4 h-4" />
+                <span className="text-sm">{configError}</span>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+        <ApiKeyInput onApiKeySubmit={setManualApiKey} />
+      </div>
+    );
   }
 
   return (
@@ -99,14 +102,6 @@ export const MerchantMap: React.FC<MerchantMapProps> = ({
             <MapPin className="w-5 h-5 text-blue-600" />
             <span className="font-medium">Your Location</span>
           </div>
-          <Button 
-            size="sm" 
-            variant="outline" 
-            onClick={() => setApiKey('')}
-            className="text-xs"
-          >
-            Change API Key
-          </Button>
         </div>
         {customerLocation ? (
           <p className="text-sm text-gray-600 mt-2">

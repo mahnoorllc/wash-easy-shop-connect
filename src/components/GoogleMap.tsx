@@ -1,9 +1,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
-import { Loader } from '@googlemaps/js-api-loader';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Star, Phone } from 'lucide-react';
 import { MerchantWithDistance } from '@/types/database';
 
 interface GoogleMapProps {
@@ -18,169 +16,74 @@ export const GoogleMap: React.FC<GoogleMapProps> = ({
   merchants,
   onMerchantSelect,
   selectedMerchantId,
-  customerLocation,
-  apiKey
+  customerLocation
 }) => {
   const mapRef = useRef<HTMLDivElement>(null);
-  const mapInstanceRef = useRef<google.maps.Map | null>(null);
-  const markersRef = useRef<google.maps.Marker[]>([]);
-  const infoWindowRef = useRef<google.maps.InfoWindow | null>(null);
   const [mapError, setMapError] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (!apiKey) {
-      setMapError('Google Maps API key is required');
-      return;
-    }
-
-    if (!mapRef.current) return;
-
-    const initMap = async () => {
-      try {
-        const loader = new Loader({
-          apiKey: apiKey,
-          version: 'weekly',
-          libraries: ['places']
-        });
-
-        await loader.load();
-        
-        // Default to a central location if no customer location
-        const center = customerLocation || { lat: 40.7128, lng: -74.0060 }; // NYC default
-
-        const map = new google.maps.Map(mapRef.current!, {
-          zoom: customerLocation ? 12 : 10,
-          center: center,
-          mapTypeControl: true,
-          streetViewControl: true,
-          fullscreenControl: true,
-        });
-
-        mapInstanceRef.current = map;
-        infoWindowRef.current = new google.maps.InfoWindow();
-
-        // Add customer location marker if available
-        if (customerLocation) {
-          new google.maps.Marker({
-            position: customerLocation,
-            map: map,
-            title: 'Your Location',
-            icon: {
-              url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="12" cy="12" r="8" fill="#3B82F6" stroke="white" stroke-width="2"/>
-                  <circle cx="12" cy="12" r="3" fill="white"/>
-                </svg>
-              `),
-              scaledSize: new google.maps.Size(24, 24),
-            }
-          });
-        }
-
-        // Clear existing markers
-        markersRef.current.forEach(marker => marker.setMap(null));
-        markersRef.current = [];
-
-        // Add merchant markers
-        merchants.forEach((merchant) => {
-          // For demo purposes, we'll generate random coordinates near the customer or center
-          const lat = (customerLocation?.lat || center.lat) + (Math.random() - 0.5) * 0.02;
-          const lng = (customerLocation?.lng || center.lng) + (Math.random() - 0.5) * 0.02;
-
-          const marker = new google.maps.Marker({
-            position: { lat, lng },
-            map: map,
-            title: merchant.business_name,
-            icon: {
-              url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="${selectedMerchantId === merchant.id ? '#10B981' : '#EF4444'}" stroke="white" stroke-width="2"/>
-                  <circle cx="12" cy="9" r="2.5" fill="white"/>
-                </svg>
-              `),
-              scaledSize: new google.maps.Size(32, 32),
-            }
-          });
-
-          markersRef.current.push(marker);
-
-          // Add click listener to marker
-          marker.addListener('click', () => {
-            onMerchantSelect(merchant.id);
-            
-            const content = `
-              <div style="max-width: 250px; font-family: system-ui, -apple-system, sans-serif;">
-                <h3 style="margin: 0 0 8px 0; font-size: 16px; font-weight: 600;">${merchant.business_name}</h3>
-                <p style="margin: 0 0 8px 0; font-size: 14px; color: #666;">${merchant.business_address}</p>
-                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-                  <span style="color: #FFA500;">★</span>
-                  <span style="font-size: 14px;">${(merchant as any).rating || 0} (${(merchant as any).review_count || 0} reviews)</span>
-                </div>
-                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-                  <span style="font-size: 14px;">📞 ${merchant.phone}</span>
-                </div>
-                ${merchant.distance_km ? `<p style="margin: 0; font-size: 12px; color: #888;">${merchant.distance_km.toFixed(1)} km away</p>` : ''}
-                <button onclick="window.selectMerchant('${merchant.id}')" style="
-                  margin-top: 8px; 
-                  background: #3B82F6; 
-                  color: white; 
-                  border: none; 
-                  padding: 6px 12px; 
-                  border-radius: 4px; 
-                  cursor: pointer;
-                  font-size: 12px;
-                ">Select This Merchant</button>
-              </div>
-            `;
-
-            infoWindowRef.current?.setContent(content);
-            infoWindowRef.current?.open(map, marker);
-          });
-        });
-
-        // Global function for info window button
-        (window as any).selectMerchant = (merchantId: string) => {
-          onMerchantSelect(merchantId);
-          infoWindowRef.current?.close();
-        };
-
-      } catch (error) {
-        console.error('Error loading Google Maps:', error);
-        setMapError('Failed to load Google Maps. Please check your API key.');
-      }
-    };
-
-    initMap();
-
-    return () => {
-      // Cleanup
-      markersRef.current.forEach(marker => marker.setMap(null));
-      if (infoWindowRef.current) {
-        infoWindowRef.current.close();
-      }
-    };
-  }, [merchants, selectedMerchantId, customerLocation, apiKey, onMerchantSelect]);
-
-  if (mapError) {
+  // For now, show a placeholder map until API key is configured
+  const renderPlaceholderMap = () => {
     return (
-      <Card>
-        <CardContent className="p-6 text-center">
-          <p className="text-red-600 mb-4">{mapError}</p>
-          <p className="text-sm text-gray-600">
-            Please add your Google Maps API key in the Supabase Edge Function Secrets.
-          </p>
-        </CardContent>
-      </Card>
+      <div className="w-full h-96 bg-gray-100 rounded-lg border border-gray-200 flex items-center justify-center relative overflow-hidden">
+        {/* Map background pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="grid grid-cols-8 grid-rows-6 h-full w-full">
+            {Array.from({ length: 48 }).map((_, i) => (
+              <div key={i} className="border border-gray-300"></div>
+            ))}
+          </div>
+        </div>
+        
+        {/* Customer location marker */}
+        {customerLocation && (
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            <div className="w-4 h-4 bg-blue-600 rounded-full border-2 border-white shadow-lg"></div>
+            <div className="text-xs text-gray-600 mt-1 whitespace-nowrap">Your Location</div>
+          </div>
+        )}
+        
+        {/* Merchant markers */}
+        {merchants.slice(0, 5).map((merchant, index) => {
+          const positions = [
+            { top: '30%', left: '60%' },
+            { top: '40%', left: '40%' },
+            { top: '60%', left: '70%' },
+            { top: '25%', left: '30%' },
+            { top: '70%', left: '50%' }
+          ];
+          const position = positions[index] || positions[0];
+          
+          return (
+            <div
+              key={merchant.id}
+              className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer"
+              style={{ top: position.top, left: position.left }}
+              onClick={() => onMerchantSelect(merchant.id)}
+            >
+              <div className={`w-6 h-6 rounded-full border-2 border-white shadow-lg flex items-center justify-center text-xs font-bold text-white ${
+                selectedMerchantId === merchant.id ? 'bg-green-500' : 'bg-red-500'
+              }`}>
+                {index + 1}
+              </div>
+              <div className="text-xs text-gray-700 mt-1 whitespace-nowrap bg-white px-1 rounded shadow">
+                {merchant.business_name}
+              </div>
+            </div>
+          );
+        })}
+        
+        {/* Map overlay text */}
+        <div className="absolute bottom-4 left-4 bg-white/90 px-3 py-2 rounded-lg shadow-sm">
+          <p className="text-sm text-gray-600">Interactive Map Preview</p>
+          <p className="text-xs text-gray-500">Google Maps integration pending</p>
+        </div>
+      </div>
     );
-  }
+  };
 
   return (
     <div className="space-y-4">
-      <div 
-        ref={mapRef} 
-        className="w-full h-96 rounded-lg border border-gray-200 shadow-sm"
-        style={{ minHeight: '400px' }}
-      />
+      {renderPlaceholderMap()}
       
       {selectedMerchantId && (
         <Card className="bg-blue-50 border-blue-200">
@@ -194,6 +97,10 @@ export const GoogleMap: React.FC<GoogleMapProps> = ({
                   <div>
                     <h4 className="font-medium text-blue-800">Selected Merchant</h4>
                     <p className="text-sm text-blue-700">{selectedMerchant.business_name}</p>
+                    <p className="text-xs text-blue-600">{selectedMerchant.business_address}</p>
+                    {selectedMerchant.distance_km && (
+                      <p className="text-xs text-blue-600">{selectedMerchant.distance_km.toFixed(1)} km away</p>
+                    )}
                   </div>
                   <Badge variant="secondary" className="bg-blue-100 text-blue-800">
                     ✓ Selected

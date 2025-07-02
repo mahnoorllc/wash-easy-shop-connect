@@ -5,7 +5,6 @@ import { Card, CardContent } from '@/components/ui/card';
 import { MapPin, AlertCircle, Loader2 } from 'lucide-react';
 import { useMerchants } from '@/hooks/useMerchants';
 import { GoogleMap } from './GoogleMap';
-import { useGoogleMapsConfig } from '@/hooks/useGoogleMapsConfig';
 
 interface MerchantMapProps {
   onMerchantSelect: (merchantId: string) => void;
@@ -21,7 +20,6 @@ export const MerchantMap: React.FC<MerchantMapProps> = ({
   const [customerLocation, setCustomerLocation] = useState<{lat: number, lng: number} | null>(null);
   const [locationError, setLocationError] = useState<string | null>(null);
   const { merchants, loading, refetchMerchants } = useMerchants();
-  const { apiKey, loading: configLoading, error: configError } = useGoogleMapsConfig();
 
   // Get customer's current location
   const getCurrentLocation = () => {
@@ -62,7 +60,7 @@ export const MerchantMap: React.FC<MerchantMapProps> = ({
     }
   }, [customerAddress]);
 
-  if (configLoading || loading) {
+  if (loading) {
     return (
       <div className="flex items-center justify-center p-8">
         <div className="text-center">
@@ -70,22 +68,6 @@ export const MerchantMap: React.FC<MerchantMapProps> = ({
           <p>Loading nearby merchants...</p>
         </div>
       </div>
-    );
-  }
-
-  // Show error if API key configuration fails
-  if (!apiKey && configError) {
-    return (
-      <Card className="border-red-200 bg-red-50">
-        <CardContent className="p-6 text-center">
-          <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
-          <h3 className="font-medium text-red-800 mb-2">Map Service Unavailable</h3>
-          <p className="text-sm text-red-600 mb-4">
-            Unable to load map service. Please contact support if the issue persists.
-          </p>
-          <p className="text-xs text-red-500">{configError}</p>
-        </CardContent>
-      </Card>
     );
   }
 
@@ -119,30 +101,21 @@ export const MerchantMap: React.FC<MerchantMapProps> = ({
         )}
       </div>
 
-      {/* Google Map - Only show when API key is available */}
-      {apiKey ? (
-        merchants.length === 0 ? (
-          <Card>
-            <CardContent className="p-6 text-center">
-              <p className="text-gray-500">No merchants available in your area.</p>
-            </CardContent>
-          </Card>
-        ) : (
-          <GoogleMap
-            merchants={merchants}
-            onMerchantSelect={onMerchantSelect}
-            selectedMerchantId={selectedMerchantId}
-            customerLocation={customerLocation}
-            apiKey={apiKey}
-          />
-        )
-      ) : (
+      {/* Google Map - Show directly without API key check */}
+      {merchants.length === 0 ? (
         <Card>
           <CardContent className="p-6 text-center">
-            <Loader2 className="w-8 h-8 animate-spin text-blue-600 mx-auto mb-4" />
-            <p className="text-gray-600">Setting up map service...</p>
+            <p className="text-gray-500">No merchants available in your area.</p>
           </CardContent>
         </Card>
+      ) : (
+        <GoogleMap
+          merchants={merchants}
+          onMerchantSelect={onMerchantSelect}
+          selectedMerchantId={selectedMerchantId}
+          customerLocation={customerLocation}
+          apiKey="temporary-placeholder"
+        />
       )}
     </div>
   );

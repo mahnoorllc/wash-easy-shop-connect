@@ -35,7 +35,7 @@ export const useGoogleMapsConfig = () => {
           return;
         }
 
-        const response = await fetch(`${supabase.supabaseUrl}/functions/v1/google-maps-config`, {
+        const response = await fetch('https://chodvuvoaudgfmbovpkk.supabase.co/functions/v1/google-maps-config', {
           headers: {
             'Authorization': `Bearer ${session.access_token}`,
             'Content-Type': 'application/json',

@@ -4,13 +4,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowLeft, Mail, Phone, MapPin, Clock, Send } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Mail, Phone, MapPin, Clock, Send } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { Navigation } from "@/components/Navigation";
+import { Footer } from "@/components/Footer";
 
 const Contact = () => {
-  const navigate = useNavigate();
   const { toast } = useToast();
   const [formData, setFormData] = useState({
     name: "",
@@ -34,19 +34,7 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50">
-      {/* Header with Back Button */}
-      <div className="bg-white/95 backdrop-blur-sm border-b border-blue-100 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <Button
-            variant="ghost"
-            onClick={() => navigate('/')}
-            className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors"
-          >
-            <ArrowLeft className="w-5 h-5" />
-            <span>Back to Home</span>
-          </Button>
-        </div>
-      </div>
+      <Navigation />
 
       <div className="py-16 px-4">
         <div className="max-w-6xl mx-auto">
@@ -112,36 +100,6 @@ const Contact = () => {
                       <p className="text-sm text-gray-500">Support: Mon-Fri 8AM-8PM</p>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
-
-              {/* Quick Links */}
-              <Card className="shadow-lg border-0">
-                <CardHeader>
-                  <CardTitle className="text-xl text-gray-900">Quick Actions</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start"
-                    onClick={() => navigate('/customer-dashboard')}
-                  >
-                    Track My Order
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start"
-                    onClick={() => navigate('/shop')}
-                  >
-                    Shop Accessories
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start"
-                    onClick={() => navigate('/register')}
-                  >
-                    Become a Partner
-                  </Button>
                 </CardContent>
               </Card>
             </div>
@@ -218,6 +176,8 @@ const Contact = () => {
           </div>
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 };

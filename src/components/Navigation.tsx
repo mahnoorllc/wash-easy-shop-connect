@@ -2,10 +2,16 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Menu, X, ShoppingBag, Truck, LayoutDashboard, Building2 } from "lucide-react";
+import { Menu, X, ShoppingBag, Truck, LayoutDashboard, Building2, ChevronDown } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { AuthButton } from "@/components/AuthButton";
 import { useAuth } from "@/contexts/AuthContext";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -29,15 +35,24 @@ export const Navigation = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            <a href="#services" className="text-gray-700 hover:text-blue-600 transition-colors">Services</a>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="text-gray-700 hover:text-blue-600 transition-colors flex items-center space-x-1">
+                  <span>Services</span>
+                  <ChevronDown className="w-4 h-4" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="bg-white border border-gray-200 shadow-lg">
+                <DropdownMenuItem onClick={() => navigate('/#services')}>
+                  Residential Services
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => navigate('/commercial-services')}>
+                  <Building2 className="w-4 h-4 mr-2" />
+                  Commercial Services
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
             <a href="#how-it-works" className="text-gray-700 hover:text-blue-600 transition-colors">How it Works</a>
-            <button 
-              onClick={() => navigate('/commercial-services')}
-              className="text-gray-700 hover:text-blue-600 transition-colors flex items-center space-x-1"
-            >
-              <Building2 className="w-4 h-4" />
-              <span>Commercial</span>
-            </button>
             <button 
               onClick={() => navigate('/shop')}
               className="text-gray-700 hover:text-blue-600 transition-colors flex items-center space-x-1"
@@ -87,14 +102,7 @@ export const Navigation = () => {
               className="block text-gray-700 hover:text-blue-600 transition-colors py-2"
               onClick={closeMenu}
             >
-              Services
-            </a>
-            <a 
-              href="#how-it-works" 
-              className="block text-gray-700 hover:text-blue-600 transition-colors py-2"
-              onClick={closeMenu}
-            >
-              How it Works
+              Residential Services
             </a>
             <button 
               onClick={() => {
@@ -105,6 +113,13 @@ export const Navigation = () => {
             >
               Commercial Services
             </button>
+            <a 
+              href="#how-it-works" 
+              className="block text-gray-700 hover:text-blue-600 transition-colors py-2"
+              onClick={closeMenu}
+            >
+              How it Works
+            </a>
             <button 
               onClick={() => {
                 navigate('/shop');

@@ -1,10 +1,21 @@
 
 import { Button } from "@/components/ui/button";
-import { Truck, Mail, Phone, MapPin, Facebook, Twitter, Instagram } from "lucide-react";
+import { Truck, Mail, Phone, MapPin, Facebook, Twitter, Instagram, MessageCircle } from "lucide-react";
+import { useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 export const Footer = () => {
+  const [isChatOpen, setIsChatOpen] = useState(false);
+
   return (
-    <footer className="bg-gray-900 text-white">
+    <footer className="bg-gray-900 text-white relative">
       <div className="max-w-7xl mx-auto px-4 py-16">
         <div className="grid md:grid-cols-4 gap-8">
           {/* Company Info */}
@@ -86,6 +97,53 @@ export const Footer = () => {
           </div>
         </div>
       </div>
+
+      {/* Instant Chat/FAQ Button */}
+      <Dialog open={isChatOpen} onOpenChange={setIsChatOpen}>
+        <DialogTrigger asChild>
+          <Button
+            className="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-blue-600 hover:bg-blue-700 shadow-lg z-50 flex items-center justify-center"
+            size="lg"
+          >
+            <MessageCircle className="w-6 h-6" />
+          </Button>
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Quick Help</DialogTitle>
+            <DialogDescription>
+              Get instant answers to common questions
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div className="space-y-3">
+              <h4 className="font-medium">Frequently Asked Questions</h4>
+              <div className="space-y-2 text-sm">
+                <details className="border rounded p-2">
+                  <summary className="cursor-pointer font-medium">How do I track my order?</summary>
+                  <p className="mt-2 text-gray-600">You can track your order from your dashboard or use the tracking link sent to your email.</p>
+                </details>
+                <details className="border rounded p-2">
+                  <summary className="cursor-pointer font-medium">What are your pickup hours?</summary>
+                  <p className="mt-2 text-gray-600">We offer 24/7 pickup and delivery services in most areas.</p>
+                </details>
+                <details className="border rounded p-2">
+                  <summary className="cursor-pointer font-medium">How do I become a partner?</summary>
+                  <p className="mt-2 text-gray-600">Visit our registration page and fill out the merchant application form.</p>
+                </details>
+              </div>
+            </div>
+            <div className="pt-4 border-t">
+              <p className="text-sm text-gray-600">
+                Need more help? Contact us at{" "}
+                <a href="mailto:support@washeasy.com" className="text-blue-600 hover:underline">
+                  support@washeasy.com
+                </a>
+              </p>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </footer>
   );
 };

@@ -26,14 +26,12 @@ export const useMerchants = () => {
       // Calculate distances if customer location is provided
       if (customerLat && customerLng) {
         merchantsWithDistance = merchantsWithDistance.map(merchant => {
-          // Use type assertion to access the potentially undefined properties
-          const merchantData = merchant as any;
-          if (merchantData.latitude && merchantData.longitude) {
+          if (merchant.latitude && merchant.longitude) {
             const distance = calculateDistance(
               customerLat,
               customerLng,
-              merchantData.latitude,
-              merchantData.longitude
+              merchant.latitude,
+              merchant.longitude
             );
             return {
               ...merchant,
@@ -46,9 +44,24 @@ export const useMerchants = () => {
 
         // Sort by distance
         merchantsWithDistance.sort((a, b) => (a.distance_km || 999) - (b.distance_km || 999));
+      } else {
+        // If no customer location, sort by rating and review count
+        merchantsWithDistance.sort((a, b) => {
+          const ratingA = a.rating || 0;
+          const ratingB = b.rating || 0;
+          const reviewsA = a.review_count || 0;
+          const reviewsB = b.review_count || 0;
+          
+          // Sort by rating first, then by review count
+          if (ratingB !== ratingA) {
+            return ratingB - ratingA;
+          }
+          return reviewsB - reviewsA;
+        });
       }
 
       setMerchants(merchantsWithDistance);
+      console.log(`Loaded ${merchantsWithDistance.length} merchants`);
     } catch (err) {
       console.error('Error fetching merchants:', err);
       setError('Failed to load merchants');

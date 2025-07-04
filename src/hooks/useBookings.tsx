@@ -45,24 +45,20 @@ export const useBookings = () => {
       setLoading(true);
       setError(null);
 
-      const { data, error } = await supabase
-        .from('bookings')
-        .select(`
-          *,
-          merchant:merchants(
-            business_name,
-            business_address,
-            phone,
-            rating
-          )
-        `)
-        .eq('customer_id', user.id)
-        .order('created_at', { ascending: false });
+      // Use the database function instead of direct query to avoid type issues
+      const { data, error } = await supabase.rpc('get_user_bookings', {
+        user_id: user.id
+      });
 
       if (error) throw error;
 
-      setBookings(data as BookingWithMerchant[]);
-      console.log(`Loaded ${data?.length || 0} bookings for user`);
+      const formattedBookings = data?.map((booking: any) => ({
+        ...booking,
+        merchant: booking.merchant ? JSON.parse(booking.merchant) : null
+      })) || [];
+
+      setBookings(formattedBookings);
+      console.log(`Loaded ${formattedBookings?.length || 0} bookings for user`);
     } catch (err) {
       console.error('Error fetching bookings:', err);
       setError('Failed to load bookings');
@@ -74,13 +70,11 @@ export const useBookings = () => {
 
   const updateBookingStatus = async (bookingId: string, status: string) => {
     try {
-      const { error } = await supabase
-        .from('bookings')
-        .update({ 
-          status: status, 
-          updated_at: new Date().toISOString() 
-        })
-        .eq('id', bookingId);
+      // Use the database function for updating status
+      const { data, error } = await supabase.rpc('update_booking_status', {
+        booking_id: bookingId,
+        new_status: status
+      });
 
       if (error) throw error;
       

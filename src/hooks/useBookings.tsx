@@ -2,7 +2,31 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
-import { BookingWithMerchant } from '@/types/database';
+
+export interface BookingWithMerchant {
+  id: string;
+  customer_id: string;
+  merchant_id: string;
+  laundry_order_id?: string;
+  booking_date: string;
+  booking_time: string;
+  duration_minutes?: number;
+  status: string;
+  customer_latitude?: number;
+  customer_longitude?: number;
+  customer_address?: string;
+  estimated_distance_km?: number;
+  estimated_travel_time_minutes?: number;
+  notes?: string;
+  created_at: string;
+  updated_at: string;
+  merchant?: {
+    business_name: string;
+    business_address: string;
+    phone: string;
+    rating: number;
+  };
+}
 
 export const useBookings = () => {
   const { user } = useAuth();
@@ -19,18 +43,26 @@ export const useBookings = () => {
 
     try {
       setLoading(true);
-      // Use type assertion to bypass TypeScript issues with RPC calls
-      const { data, error } = await (supabase as any).rpc('get_user_bookings', {
-        user_id: user.id
-      });
+      setError(null);
 
-      if (error) {
-        // Fallback: try to query using regular method
-        console.log('RPC failed, using fallback method');
-        setBookings([]);
-      } else {
-        setBookings(data as BookingWithMerchant[]);
-      }
+      const { data, error } = await supabase
+        .from('bookings')
+        .select(`
+          *,
+          merchant:merchants(
+            business_name,
+            business_address,
+            phone,
+            rating
+          )
+        `)
+        .eq('customer_id', user.id)
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+
+      setBookings(data as BookingWithMerchant[]);
+      console.log(`Loaded ${data?.length || 0} bookings for user`);
     } catch (err) {
       console.error('Error fetching bookings:', err);
       setError('Failed to load bookings');
@@ -42,16 +74,25 @@ export const useBookings = () => {
 
   const updateBookingStatus = async (bookingId: string, status: string) => {
     try {
-      // Use type assertion to bypass TypeScript issues with RPC calls
-      const { error } = await (supabase as any).rpc('update_booking_status', {
-        booking_id: bookingId,
-        new_status: status
-      });
+      const { error } = await supabase
+        .from('bookings')
+        .update({ 
+          status: status, 
+          updated_at: new Date().toISOString() 
+        })
+        .eq('id', bookingId);
 
       if (error) throw error;
       
-      // Refresh bookings
-      fetchBookings();
+      // Update local state
+      setBookings(prev => 
+        prev.map(booking => 
+          booking.id === bookingId 
+            ? { ...booking, status }
+            : booking
+        )
+      );
+      
       return true;
     } catch (err) {
       console.error('Error updating booking status:', err);

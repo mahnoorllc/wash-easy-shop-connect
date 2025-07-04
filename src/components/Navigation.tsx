@@ -1,159 +1,143 @@
-
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Menu, X, ShoppingBag, Truck, LayoutDashboard, Building2, ChevronDown } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { AuthButton } from "@/components/AuthButton";
-import { useAuth } from "@/contexts/AuthContext";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import React, { useState } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useAuth } from '@/contexts/AuthContext';
+import { Button } from '@/components/ui/button';
+import { 
+  NavigationMenu, 
+  NavigationMenuContent, 
+  NavigationMenuItem, 
+  NavigationMenuLink, 
+  NavigationMenuList, 
+  NavigationMenuTrigger 
+} from '@/components/ui/navigation-menu';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Menu, ShoppingCart, User, Store } from 'lucide-react';
+import { AuthButton } from './AuthButton';
 
 export const Navigation = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const navigate = useNavigate();
   const { user } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [isOpen, setIsOpen] = useState(false);
 
-  const closeMenu = () => setIsMenuOpen(false);
+  const navigationLinks = [
+    { href: '/', label: 'Home' },
+    { href: '/shop', label: 'Shop' },
+    { href: '/commercial', label: 'Commercial' },
+    { href: '/contact', label: 'Contact' }
+  ];
+
+  const isActive = (path: string) => location.pathname === path;
 
   return (
-    <nav className="bg-white/95 backdrop-blur-sm border-b border-blue-100 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-              <Truck className="w-5 h-5 text-white" />
+    <nav className="border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 sticky top-0 z-50">
+      <div className="container mx-auto px-4">
+        <div className="flex h-16 items-center justify-between">
+          <Link to="/" className="flex items-center space-x-2">
+            <div className="h-8 w-8 bg-blue-600 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold">L</span>
             </div>
-            <span className="text-xl font-bold text-gray-900">WashEasy</span>
-            <Badge variant="secondary" className="text-xs">BETA</Badge>
-          </div>
+            <span className="font-bold text-xl">LaundryApp</span>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <button className="text-gray-700 hover:text-blue-600 transition-colors flex items-center space-x-1">
-                  <span>Services</span>
-                  <ChevronDown className="w-4 h-4" />
-                </button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="bg-white border border-gray-200 shadow-lg">
-                <DropdownMenuItem onClick={() => navigate('/#services')}>
-                  Residential Services
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => navigate('/commercial-services')}>
-                  <Building2 className="w-4 h-4 mr-2" />
-                  Commercial Services
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-            <a href="#how-it-works" className="text-gray-700 hover:text-blue-600 transition-colors">How it Works</a>
-            <button 
-              onClick={() => navigate('/shop')}
-              className="text-gray-700 hover:text-blue-600 transition-colors flex items-center space-x-1"
-            >
-              <ShoppingBag className="w-4 h-4" />
-              <span>Shop</span>
-            </button>
-            {user && (
-              <button 
-                onClick={() => navigate('/customer-dashboard')}
-                className="text-gray-700 hover:text-blue-600 transition-colors flex items-center space-x-1"
-              >
-                <LayoutDashboard className="w-4 h-4" />
-                <span>Dashboard</span>
-              </button>
-            )}
-            <button 
-              onClick={() => navigate('/contact')}
-              className="text-gray-700 hover:text-blue-600 transition-colors"
-            >
-              Contact
-            </button>
-          </div>
+            <NavigationMenu>
+              <NavigationMenuList>
+                {navigationLinks.map((link) => (
+                  <NavigationMenuItem key={link.href}>
+                    <NavigationMenuLink asChild>
+                      <Link 
+                        to={link.href}
+                        className={`px-3 py-2 text-sm font-medium transition-colors hover:text-blue-600 ${
+                          isActive(link.href) ? 'text-blue-600' : 'text-gray-700'
+                        }`}
+                      >
+                        {link.label}
+                      </Link>
+                    </NavigationMenuLink>
+                  </NavigationMenuItem>
+                ))}
+              </NavigationMenuList>
+            </NavigationMenu>
 
-          {/* Auth Button */}
-          <div className="hidden md:flex items-center">
-            <AuthButton />
-          </div>
-
-          {/* Mobile menu button */}
-          <div className="md:hidden">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </Button>
-          </div>
-        </div>
-
-        {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="md:hidden py-4 space-y-4 border-t border-blue-100">
-            <a 
-              href="#services" 
-              className="block text-gray-700 hover:text-blue-600 transition-colors py-2"
-              onClick={closeMenu}
-            >
-              Residential Services
-            </a>
-            <button 
-              onClick={() => {
-                navigate('/commercial-services');
-                closeMenu();
-              }}
-              className="block text-gray-700 hover:text-blue-600 transition-colors py-2 w-full text-left"
-            >
-              Commercial Services
-            </button>
-            <a 
-              href="#how-it-works" 
-              className="block text-gray-700 hover:text-blue-600 transition-colors py-2"
-              onClick={closeMenu}
-            >
-              How it Works
-            </a>
-            <button 
-              onClick={() => {
-                navigate('/shop');
-                closeMenu();
-              }}
-              className="block text-gray-700 hover:text-blue-600 transition-colors py-2 w-full text-left"
-            >
-              Shop
-            </button>
-            {user && (
-              <button 
-                onClick={() => {
-                  navigate('/customer-dashboard');
-                  closeMenu();
-                }}
-                className="block text-gray-700 hover:text-blue-600 transition-colors py-2 w-full text-left"
-              >
-                Dashboard
-              </button>
-            )}
-            <button 
-              onClick={() => {
-                navigate('/contact');
-                closeMenu();
-              }}
-              className="block text-gray-700 hover:text-blue-600 transition-colors py-2 w-full text-left"
-            >
-              Contact
-            </button>
-            <div className="pt-4 border-t border-blue-100">
+            <div className="flex items-center space-x-4">
+              {user ? (
+                <div className="flex items-center space-x-2">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => navigate('/dashboard')}
+                    className="flex items-center space-x-1"
+                  >
+                    <User className="w-4 h-4" />
+                    <span>Dashboard</span>
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => navigate('/merchant-dashboard')}
+                    className="flex items-center space-x-1"
+                  >
+                    <Store className="w-4 h-4" />
+                    <span>Merchant</span>
+                  </Button>
+                </div>
+              ) : null}
               <AuthButton />
             </div>
           </div>
-        )}
+
+          {/* Mobile Navigation */}
+          <div className="md:hidden">
+            <Sheet open={isOpen} onOpenChange={setIsOpen}>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="sm">
+                  <Menu className="h-5 w-5" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right">
+                <div className="flex flex-col space-y-4 mt-8">
+                  {navigationLinks.map((link) => (
+                    <Link
+                      key={link.href}
+                      to={link.href}
+                      onClick={() => setIsOpen(false)}
+                      className={`px-4 py-2 text-sm font-medium transition-colors hover:text-blue-600 ${
+                        isActive(link.href) ? 'text-blue-600' : 'text-gray-700'
+                      }`}
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                  {user && (
+                    <>
+                      <Link
+                        to="/dashboard"
+                        onClick={() => setIsOpen(false)}
+                        className="px-4 py-2 text-sm font-medium transition-colors hover:text-blue-600 flex items-center space-x-2"
+                      >
+                        <User className="w-4 h-4" />
+                        <span>Dashboard</span>
+                      </Link>
+                      <Link
+                        to="/merchant-dashboard"
+                        onClick={() => setIsOpen(false)}
+                        className="px-4 py-2 text-sm font-medium transition-colors hover:text-blue-600 flex items-center space-x-2"
+                      >
+                        <Store className="w-4 h-4" />
+                        <span>Merchant</span>
+                      </Link>
+                    </>
+                  )}
+                  <div className="px-4">
+                    <AuthButton />
+                  </div>
+                </div>
+              </SheetContent>
+            </Sheet>
+          </div>
+        </div>
       </div>
     </nav>
   );

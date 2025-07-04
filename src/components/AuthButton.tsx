@@ -23,32 +23,36 @@ export const AuthButton = () => {
   if (!user) {
     return (
       <Link to="/auth">
-        <Button>
+        <Button className="bg-blue-600 hover:bg-blue-700">
           <User className="w-4 h-4 mr-2" />
-          Sign In
+          Login / Sign Up
         </Button>
       </Link>
     );
   }
 
-  const displayName = profile?.full_name || user.email;
+  const displayName = profile?.full_name || user.email?.split('@')[0] || 'User';
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline" className="flex items-center gap-2">
           <User className="w-4 h-4" />
-          {displayName}
+          <span className="hidden sm:inline">Welcome, {displayName}</span>
+          <span className="sm:hidden">{displayName}</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent align="end" className="w-48">
         <DropdownMenuItem asChild>
-          <Link to="/customer-dashboard">Dashboard</Link>
+          <Link to="/dashboard" className="flex items-center">
+            <User className="w-4 h-4 mr-2" />
+            My Profile
+          </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={signOut} className="text-red-600">
+        <DropdownMenuItem onClick={signOut} className="text-red-600 focus:text-red-600">
           <LogOut className="w-4 h-4 mr-2" />
-          Sign Out
+          Logout
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

@@ -93,25 +93,50 @@ export const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-sm text-gray-400 text-center md:text-left">
-            © 2024 WashEasy. All rights reserved.
-          </p>
-          <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6 text-sm text-gray-400 mt-4 md:mt-0">
-            <div className="flex space-x-6">
-              <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-              <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
-              <a href="#" className="hover:text-white transition-colors">Cookie Policy</a>
+        <div className="border-t border-gray-800 mt-12 pt-8">
+          {/* Mobile-first centered layout */}
+          <div className="text-center space-y-4 md:hidden">
+            <p className="text-sm text-gray-400">
+              © 2025 WashEasy. All rights reserved.
+            </p>
+            <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-400">
+              <a href="#" className="hover:text-white transition-colors">Terms</a>
+              <a href="#" className="hover:text-white transition-colors">Privacy</a>
+              <a href="#" className="hover:text-white transition-colors">FAQs</a>
+              <a href="#" className="hover:text-white transition-colors">Contact</a>
             </div>
             <Button
               onClick={scrollToMenu}
               variant="ghost"
               size="sm"
-              className="text-gray-400 hover:text-white flex items-center space-x-1"
+              className="text-gray-400 hover:text-white flex items-center space-x-1 mx-auto"
             >
               <ArrowUp className="w-4 h-4" />
               <span>Go to Menu</span>
             </Button>
+          </div>
+
+          {/* Desktop layout */}
+          <div className="hidden md:flex justify-between items-center">
+            <p className="text-sm text-gray-400">
+              © 2025 WashEasy. All rights reserved.
+            </p>
+            <div className="flex items-center space-x-6 text-sm text-gray-400">
+              <div className="flex space-x-6">
+                <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
+                <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+                <a href="#" className="hover:text-white transition-colors">Cookie Policy</a>
+              </div>
+              <Button
+                onClick={scrollToMenu}
+                variant="ghost"
+                size="sm"
+                className="text-gray-400 hover:text-white flex items-center space-x-1"
+              >
+                <ArrowUp className="w-4 h-4" />
+                <span>Go to Menu</span>
+              </Button>
+            </div>
           </div>
         </div>
       </div>

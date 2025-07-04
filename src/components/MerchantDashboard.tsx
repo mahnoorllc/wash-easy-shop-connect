@@ -64,18 +64,42 @@ export const MerchantDashboard = () => {
 
       if (!merchantData) return;
 
-      // Use raw SQL query to avoid TypeScript issues with the new bookings table
-      const { data, error } = await supabase
-        .from('bookings' as any)
-        .select(`
-          *,
-          customer_profile:profiles(full_name, phone)
-        `)
-        .eq('merchant_id', merchantData.id)
-        .order('created_at', { ascending: false });
+      // Get all bookings for this merchant using a simpler approach
+      const { data, error } = await supabase.rpc('get_merchant_bookings', {
+        merchant_user_id: user?.id
+      });
 
-      if (error) throw error;
-      setBookings(data || []);
+      if (error) {
+        // Fallback to direct query if function doesn't exist
+        console.log('Database function not found, using direct query');
+        const { data: directData, error: directError } = await supabase
+          .from('bookings' as any)
+          .select('*')
+          .eq('merchant_id', merchantData.id)
+          .order('created_at', { ascending: false });
+
+        if (directError) throw directError;
+        
+        // Get customer profiles separately to avoid relationship issues
+        const bookingsWithProfiles = await Promise.all(
+          (directData || []).map(async (booking: any) => {
+            const { data: profile } = await supabase
+              .from('profiles')
+              .select('full_name, phone')
+              .eq('id', booking.customer_id)
+              .single();
+            
+            return {
+              ...booking,
+              customer_profile: profile
+            };
+          })
+        );
+        
+        setBookings(bookingsWithProfiles);
+      } else {
+        setBookings(data || []);
+      }
     } catch (error) {
       console.error('Error fetching bookings:', error);
       toast.error('Failed to load bookings');

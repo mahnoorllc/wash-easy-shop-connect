@@ -7,6 +7,8 @@ import { AuthProvider } from '@/contexts/AuthContext';
 
 import Index from '@/pages/Index';
 import Auth from '@/pages/Auth';
+import Login from '@/pages/Login';
+import Register from '@/pages/Register';
 import CustomerDashboard from '@/pages/CustomerDashboard';
 import MerchantDashboard from '@/pages/MerchantDashboard';
 import MerchantRegister from '@/pages/MerchantRegister';
@@ -28,8 +30,12 @@ function App() {
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/auth" element={<Auth />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
             <Route path="/dashboard" element={<CustomerDashboard />} />
+            <Route path="/customer-dashboard" element={<CustomerDashboard />} />
             <Route path="/merchant-dashboard" element={<MerchantDashboard />} />
+            <Route path="/admin-dashboard" element={<CustomerDashboard />} />
             <Route path="/merchant-register" element={<MerchantRegister />} />
             <Route path="/shop" element={<Shop />} />
             <Route path="/commercial" element={<CommercialServices />} />

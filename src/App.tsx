@@ -16,6 +16,8 @@ import Shop from '@/pages/Shop';
 import CommercialServices from '@/pages/CommercialServices';
 import ResidentialServices from '@/pages/ResidentialServices';
 import Contact from '@/pages/Contact';
+import Blog from '@/pages/Blog';
+import BlogPost from '@/pages/BlogPost';
 import NotFound from '@/pages/NotFound';
 
 import './App.css';
@@ -41,6 +43,8 @@ function App() {
             <Route path="/commercial" element={<CommercialServices />} />
             <Route path="/residential" element={<ResidentialServices />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Router>

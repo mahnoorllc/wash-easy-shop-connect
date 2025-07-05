@@ -9,10 +9,10 @@ export const Footer = () => {
 
   return (
     <footer className="bg-gray-900 text-white relative">
-      <div className="max-w-7xl mx-auto px-4 py-16">
-        <div className="grid md:grid-cols-4 gap-8">
+      <div className="max-w-7xl mx-auto px-4 py-12 md:py-16">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
           {/* Company Info */}
-          <div className="space-y-4 text-center md:text-left">
+          <div className="md:col-span-2 space-y-4 text-center md:text-left">
             <div className="flex items-center justify-center md:justify-start space-x-2">
               <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
                 <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -22,7 +22,7 @@ export const Footer = () => {
               </div>
               <span className="text-xl font-bold">WashEasy</span>
             </div>
-            <p className="text-gray-400 text-sm leading-relaxed">
+            <p className="text-gray-400 text-sm leading-relaxed max-w-md mx-auto md:mx-0">
               Professional laundry services and premium accessories delivered to your doorstep. Connecting customers with trusted local partners.
             </p>
           </div>
@@ -44,41 +44,27 @@ export const Footer = () => {
             <h3 className="text-lg font-semibold">Support</h3>
             <div className="space-y-2 text-sm text-gray-400">
               <a href="/contact" className="block hover:text-white transition-colors">Help Center</a>
-              <a href="/dashboard" className="block hover:text-white transition-colors">Track Order</a>
+              <a href="/customer-dashboard" className="block hover:text-white transition-colors">Track Order</a>
               <a href="/merchant-register" className="block hover:text-white transition-colors">Partner Support</a>
               <a href="/contact" className="block hover:text-white transition-colors">Quality Guarantee</a>
               <a href="/contact" className="block hover:text-white transition-colors">Contact Us</a>
             </div>
           </div>
 
-          {/* Contact */}
+          {/* Blog & Resources */}
           <div className="space-y-4 text-center md:text-left">
-            <h3 className="text-lg font-semibold">Contact</h3>
-            <div className="space-y-3 text-sm text-gray-400">
-              <div className="flex items-center justify-center md:justify-start space-x-2">
-                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
-                </svg>
-                <span>+1 (555) 123-4567</span>
-              </div>
-              <div className="flex items-center justify-center md:justify-start space-x-2">
-                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
-                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
-                </svg>
-                <span>support@washeasy.com</span>
-              </div>
-              <div className="flex items-center justify-center md:justify-start space-x-2">
-                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd"/>
-                </svg>
-                <span>Available in 50+ cities</span>
-              </div>
+            <h3 className="text-lg font-semibold">Blog & Resources</h3>
+            <div className="space-y-2 text-sm text-gray-400">
+              <a href="/blog" className="block hover:text-white transition-colors">All Articles</a>
+              <a href="/blog/care-for-your-clothes-guide" className="block hover:text-white transition-colors">Care for Your Clothes</a>
+              <a href="/blog/protect-hands-during-laundry" className="block hover:text-white transition-colors">Safe Washing Tips</a>
+              <a href="/blog/eco-friendly-laundry-tips" className="block hover:text-white transition-colors">Eco-Friendly Laundry</a>
+              <a href="/blog/stain-removal-secrets" className="block hover:text-white transition-colors">Stain Removal</a>
             </div>
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-12 pt-8">
+        <div className="border-t border-gray-800 mt-8 md:mt-12 pt-6 md:pt-8">
           {/* Mobile-first centered layout */}
           <div className="text-center space-y-4 md:hidden">
             <p className="text-sm text-gray-400">

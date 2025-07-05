@@ -64,20 +64,20 @@ const ResidentialServices = () => {
       <Navigation />
       
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-16">
+      <section className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-12 md:py-16 mt-16">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">
+          <h1 className="text-3xl md:text-5xl font-bold mb-4 md:mb-6">
             Residential Laundry Services
           </h1>
-          <p className="text-xl mb-8 max-w-3xl mx-auto">
+          <p className="text-lg md:text-xl mb-6 md:mb-8 max-w-3xl mx-auto">
             Professional laundry and dry cleaning services for your home. 
             Save time and get perfectly clean clothes delivered to your door.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild size="lg" className="bg-white text-blue-600 hover:bg-gray-100">
+            <Button asChild size="lg" className="bg-white text-blue-600 hover:bg-gray-100 border-0">
               <Link to="/#book-service">Book Service Now</Link>
             </Button>
-            <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-blue-600">
+            <Button asChild variant="outline" size="lg" className="border-2 border-white text-white bg-transparent hover:bg-white hover:text-blue-600">
               <Link to="/contact">Get Quote</Link>
             </Button>
           </div>
@@ -85,28 +85,28 @@ const ResidentialServices = () => {
       </section>
 
       {/* Services Section */}
-      <section className="py-16">
+      <section className="py-12 md:py-16">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Our Residential Services</h2>
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">Our Residential Services</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
               Choose from our range of professional laundry services designed for busy households
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {services.map((service, index) => (
               <Card key={index} className="h-full">
                 <CardHeader>
-                  <CardTitle className="text-xl">{service.name}</CardTitle>
+                  <CardTitle className="text-lg md:text-xl">{service.name}</CardTitle>
                   <Badge className="w-fit bg-blue-100 text-blue-800">{service.price}</Badge>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-600 mb-4">{service.description}</p>
+                  <p className="text-gray-600 mb-4 text-sm md:text-base">{service.description}</p>
                   <ul className="space-y-2">
                     {service.features.map((feature, idx) => (
                       <li key={idx} className="flex items-center text-sm">
-                        <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
+                        <CheckCircle className="w-4 h-4 text-green-500 mr-2 flex-shrink-0" />
                         {feature}
                       </li>
                     ))}
@@ -119,20 +119,20 @@ const ResidentialServices = () => {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-16 bg-white">
+      <section className="py-12 md:py-16 bg-white">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Why Choose Our Residential Services?</h2>
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">Why Choose Our Residential Services?</h2>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
             {benefits.map((benefit, index) => (
               <div key={index} className="text-center">
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <benefit.icon className="w-8 h-8 text-blue-600" />
+                <div className="w-12 h-12 md:w-16 md:h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <benefit.icon className="w-6 h-6 md:w-8 md:h-8 text-blue-600" />
                 </div>
-                <h3 className="text-xl font-semibold mb-2">{benefit.title}</h3>
-                <p className="text-gray-600">{benefit.description}</p>
+                <h3 className="text-lg md:text-xl font-semibold mb-2">{benefit.title}</h3>
+                <p className="text-gray-600 text-sm md:text-base">{benefit.description}</p>
               </div>
             ))}
           </div>
@@ -140,13 +140,13 @@ const ResidentialServices = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-blue-50">
+      <section className="py-12 md:py-16 bg-blue-50">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-4">Ready to Get Started?</h2>
-          <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
+          <h2 className="text-2xl md:text-3xl font-bold mb-4">Ready to Get Started?</h2>
+          <p className="text-gray-600 mb-6 md:mb-8 max-w-2xl mx-auto">
             Experience the convenience of professional laundry service. Book your first pickup today!
           </p>
-          <Button asChild size="lg">
+          <Button asChild size="lg" className="bg-blue-600 hover:bg-blue-700 text-white">
             <Link to="/#book-service">Schedule Pickup</Link>
           </Button>
         </div>

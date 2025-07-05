@@ -1,4 +1,6 @@
 
+import { Mail, Phone, MapPin } from "lucide-react";
+
 export const Footer = () => {
   const scrollToMenu = () => {
     const navigation = document.getElementById('main-navigation');
@@ -10,9 +12,9 @@ export const Footer = () => {
   return (
     <footer className="bg-gray-900 text-white relative">
       <div className="max-w-7xl mx-auto px-4 py-12 md:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}
-          <div className="md:col-span-2 space-y-4 text-center md:text-left">
+          <div className="space-y-4 text-center md:text-left">
             <div className="flex items-center justify-center md:justify-start space-x-2">
               <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
                 <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -23,7 +25,7 @@ export const Footer = () => {
               <span className="text-xl font-bold">WashEasy</span>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed max-w-md mx-auto md:mx-0">
-              Professional laundry services and premium accessories delivered to your doorstep. Connecting customers with trusted local partners.
+              Professional laundry services and premium accessories delivered to your doorstep.
             </p>
           </div>
 
@@ -39,18 +41,6 @@ export const Footer = () => {
             </div>
           </div>
 
-          {/* Support */}
-          <div className="space-y-4 text-center md:text-left">
-            <h3 className="text-lg font-semibold">Support</h3>
-            <div className="space-y-2 text-sm text-gray-400">
-              <a href="/contact" className="block hover:text-white transition-colors">Help Center</a>
-              <a href="/customer-dashboard" className="block hover:text-white transition-colors">Track Order</a>
-              <a href="/merchant-register" className="block hover:text-white transition-colors">Partner Support</a>
-              <a href="/contact" className="block hover:text-white transition-colors">Quality Guarantee</a>
-              <a href="/contact" className="block hover:text-white transition-colors">Contact Us</a>
-            </div>
-          </div>
-
           {/* Blog & Resources */}
           <div className="space-y-4 text-center md:text-left">
             <h3 className="text-lg font-semibold">Blog & Resources</h3>
@@ -62,6 +52,29 @@ export const Footer = () => {
               <a href="/blog/stain-removal-secrets" className="block hover:text-white transition-colors">Stain Removal</a>
             </div>
           </div>
+
+          {/* Contact Info */}
+          <div className="space-y-4 text-center md:text-left">
+            <h3 className="text-lg font-semibold">Contact Us</h3>
+            <div className="space-y-3 text-sm text-gray-400">
+              <div className="flex items-center justify-center md:justify-start space-x-2">
+                <Mail className="w-4 h-4" />
+                <a href="mailto:support@washeasy.com" className="hover:text-white transition-colors">
+                  support@washeasy.com
+                </a>
+              </div>
+              <div className="flex items-center justify-center md:justify-start space-x-2">
+                <Phone className="w-4 h-4" />
+                <a href="https://wa.me/15551234567" className="hover:text-white transition-colors">
+                  WhatsApp: +1-555-123-4567
+                </a>
+              </div>
+              <div className="flex items-center justify-center md:justify-start space-x-2">
+                <MapPin className="w-4 h-4" />
+                <span>San Francisco, CA</span>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="border-t border-gray-800 mt-8 md:mt-12 pt-6 md:pt-8">
@@ -71,9 +84,8 @@ export const Footer = () => {
               © 2025 WashEasy. All rights reserved.
             </p>
             <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-400">
-              <a href="#" className="hover:text-white transition-colors">Terms</a>
-              <a href="#" className="hover:text-white transition-colors">Privacy</a>
-              <a href="/contact" className="hover:text-white transition-colors">FAQs</a>
+              <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
+              <a href="#" className="hover:text-white transition-colors">Terms & Conditions</a>
               <a href="/contact" className="hover:text-white transition-colors">Contact</a>
             </div>
             <button
@@ -95,8 +107,7 @@ export const Footer = () => {
             <div className="flex items-center space-x-6 text-sm text-gray-400">
               <div className="flex space-x-6">
                 <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-                <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
-                <a href="#" className="hover:text-white transition-colors">Cookie Policy</a>
+                <a href="#" className="hover:text-white transition-colors">Terms & Conditions</a>
               </div>
               <button
                 onClick={scrollToMenu}

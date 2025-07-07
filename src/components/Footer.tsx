@@ -1,6 +1,7 @@
 
-import { Mail, Phone, MapPin, ArrowUp, HelpCircle } from "lucide-react";
+import { Mail, Phone, MapPin, ArrowUp } from "lucide-react";
 import { useEffect, useState } from "react";
+import { FAQDialog } from "./FAQDialog";
 
 export const Footer = () => {
   const [showScrollButton, setShowScrollButton] = useState(false);
@@ -18,13 +19,6 @@ export const Footer = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const scrollToMenu = () => {
-    const navigation = document.getElementById('main-navigation');
-    if (navigation) {
-      navigation.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   return (
     <>
       {/* Fixed Scroll to Top Button */}
@@ -32,20 +26,14 @@ export const Footer = () => {
         <button
           onClick={scrollToTop}
           className="fixed bottom-6 right-6 z-50 bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110"
-          aria-label="Go to Menu"
+          aria-label="Go to Top"
         >
           <ArrowUp className="w-5 h-5" />
         </button>
       )}
 
       {/* FAQ Button - Fixed position */}
-      <button
-        onClick={() => window.location.href = '/contact'}
-        className="fixed bottom-20 right-6 z-50 bg-green-600 hover:bg-green-700 text-white p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110"
-        aria-label="FAQ & Help"
-      >
-        <HelpCircle className="w-5 h-5" />
-      </button>
+      <FAQDialog />
 
       <footer className="bg-gray-900 text-white relative">
         <div className="max-w-7xl mx-auto px-4 py-12 md:py-16">

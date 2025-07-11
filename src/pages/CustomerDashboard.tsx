@@ -6,9 +6,10 @@ import { Navigation } from '@/components/Navigation';
 import { Footer } from '@/components/Footer';
 import { BookingForm } from '@/components/BookingForm';
 import { CustomerBookings } from '@/components/CustomerBookings';
+import { ProfileForm } from '@/components/ProfileForm';
+import { OrderHistory } from '@/components/OrderHistory';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { CalendarDays, Plus, User } from 'lucide-react';
+import { CalendarDays, Plus, User, History } from 'lucide-react';
 
 const CustomerDashboard = () => {
   const { user } = useAuth();
@@ -26,7 +27,7 @@ const CustomerDashboard = () => {
           </div>
 
           <Tabs defaultValue="bookings" className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
+            <TabsList className="grid w-full grid-cols-4">
               <TabsTrigger value="bookings" className="flex items-center space-x-2">
                 <CalendarDays className="w-4 h-4" />
                 <span>My Bookings</span>
@@ -34,6 +35,14 @@ const CustomerDashboard = () => {
               <TabsTrigger value="new-booking" className="flex items-center space-x-2">
                 <Plus className="w-4 h-4" />
                 <span>New Booking</span>
+              </TabsTrigger>
+              <TabsTrigger value="profile" className="flex items-center space-x-2">
+                <User className="w-4 h-4" />
+                <span>Profile</span>
+              </TabsTrigger>
+              <TabsTrigger value="history" className="flex items-center space-x-2">
+                <History className="w-4 h-4" />
+                <span>History</span>
               </TabsTrigger>
             </TabsList>
 
@@ -43,6 +52,14 @@ const CustomerDashboard = () => {
 
             <TabsContent value="new-booking" className="mt-6">
               <BookingForm />
+            </TabsContent>
+
+            <TabsContent value="profile" className="mt-6">
+              <ProfileForm />
+            </TabsContent>
+
+            <TabsContent value="history" className="mt-6">
+              <OrderHistory />
             </TabsContent>
           </Tabs>
         </div>

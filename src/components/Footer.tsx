@@ -2,6 +2,7 @@
 import { Mail, Phone, MapPin, ArrowUp } from "lucide-react";
 import { useEffect, useState } from "react";
 import { FAQDialog } from "./FAQDialog";
+import { LayoutSwitcher } from "./LayoutSwitcher";
 
 export const Footer = () => {
   const [showScrollButton, setShowScrollButton] = useState(false);
@@ -34,6 +35,11 @@ export const Footer = () => {
 
       {/* FAQ Button - Fixed position */}
       <FAQDialog />
+      
+      {/* Layout Switcher - Fixed position */}
+      <div className="fixed bottom-6 left-6 z-50">
+        <LayoutSwitcher />
+      </div>
 
       <footer className="bg-gray-900 text-white relative">
         <div className="max-w-7xl mx-auto px-4 py-12 md:py-16">

@@ -53,10 +53,76 @@ const Blog = () => {
       category: "Care Tips",
       image: "/placeholder.svg",
       slug: "stain-removal-secrets"
+    },
+    {
+      id: 5,
+      title: "Winter Laundry Tips: Dealing with Cold Weather",
+      excerpt: "Special techniques for washing winter clothes, dealing with static, and keeping your laundry fresh during cold months.",
+      author: "Lisa Martinez",
+      date: "January 6, 2025",
+      readTime: "5 min read",
+      category: "Seasonal Tips",
+      image: "/placeholder.svg",
+      slug: "winter-laundry-tips"
+    },
+    {
+      id: 6,
+      title: "Commercial Laundry Best Practices",
+      excerpt: "Learn how businesses can optimize their laundry operations for efficiency, cost savings, and quality results.",
+      author: "Robert Anderson",
+      date: "January 4, 2025",
+      readTime: "8 min read",
+      category: "Commercial",
+      image: "/placeholder.svg",
+      slug: "commercial-laundry-best-practices"
+    },
+    {
+      id: 7,
+      title: "Fabric-Specific Care: Silk, Wool, and Delicates",
+      excerpt: "Master the art of caring for delicate fabrics with expert tips on washing silk, wool, and other special materials.",
+      author: "Maria Rodriguez",
+      date: "January 2, 2025",
+      readTime: "6 min read",
+      category: "Care Tips",
+      image: "/placeholder.svg",
+      slug: "fabric-specific-care-guide"
+    },
+    {
+      id: 8,
+      title: "Laundry Equipment Maintenance: Keep It Running",
+      excerpt: "Essential maintenance tips to keep your washing machines and dryers running efficiently and lasting longer.",
+      author: "Tom Mitchell",
+      date: "December 30, 2024",
+      readTime: "5 min read",
+      category: "Maintenance",
+      image: "/placeholder.svg",
+      slug: "laundry-equipment-maintenance"
+    },
+    {
+      id: 9,
+      title: "Cost-Saving Laundry Hacks for Families",
+      excerpt: "Smart strategies to reduce your laundry costs while maintaining cleanliness and quality for large families.",
+      author: "Jennifer Lee",
+      date: "December 28, 2024",
+      readTime: "4 min read",
+      category: "Budget Tips",
+      image: "/placeholder.svg",
+      slug: "cost-saving-laundry-hacks"
+    },
+    {
+      id: 10,
+      title: "Quick Laundry Fixes: 15-Minute Solutions",
+      excerpt: "Emergency laundry tips and quick fixes for when you need clean clothes fast without compromising quality.",
+      author: "Alex Thompson",
+      date: "December 26, 2024",
+      readTime: "3 min read",
+      category: "Quick Tips",
+      image: "/placeholder.svg",
+      slug: "quick-laundry-fixes"
     }
   ];
 
-  const categories = ["All", "Care Tips", "Health & Safety", "Sustainability"];
+  const categories = ["All", "Care Tips", "Health & Safety", "Sustainability", "Seasonal Tips", "Commercial", "Maintenance", "Budget Tips", "Quick Tips"];
 
   return (
     <div className="min-h-screen bg-gray-50">

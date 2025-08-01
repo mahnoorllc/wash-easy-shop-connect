@@ -108,8 +108,9 @@ export const Footer = () => {
                 © 2025 WashEasy. All rights reserved.
               </p>
               <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-400">
-                <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-                <a href="#" className="hover:text-white transition-colors">Terms & Conditions</a>
+                <a href="/privacy" className="hover:text-white transition-colors">Privacy Policy</a>
+                <a href="/terms" className="hover:text-white transition-colors">Terms & Conditions</a>
+                <a href="/refund" className="hover:text-white transition-colors">Refund Policy</a>
               </div>
             </div>
 
@@ -119,8 +120,9 @@ export const Footer = () => {
                 © 2025 WashEasy. All rights reserved.
               </p>
               <div className="flex items-center space-x-6 text-sm text-gray-400">
-                <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-                <a href="#" className="hover:text-white transition-colors">Terms & Conditions</a>
+                <a href="/privacy" className="hover:text-white transition-colors">Privacy Policy</a>
+                <a href="/terms" className="hover:text-white transition-colors">Terms & Conditions</a>
+                <a href="/refund" className="hover:text-white transition-colors">Refund Policy</a>
               </div>
             </div>
           </div>

@@ -18,6 +18,10 @@ import ResidentialServices from '@/pages/ResidentialServices';
 import Contact from '@/pages/Contact';
 import Blog from '@/pages/Blog';
 import BlogPost from '@/pages/BlogPost';
+import PrivacyPolicy from '@/pages/PrivacyPolicy';
+import TermsOfService from '@/pages/TermsOfService';
+import RefundPolicy from '@/pages/RefundPolicy';
+import AdminDashboard from '@/pages/AdminDashboard';
 import NotFound from '@/pages/NotFound';
 
 import './App.css';
@@ -37,7 +41,7 @@ function App() {
             <Route path="/dashboard" element={<CustomerDashboard />} />
             <Route path="/customer-dashboard" element={<CustomerDashboard />} />
             <Route path="/merchant-dashboard" element={<MerchantDashboard />} />
-            <Route path="/admin-dashboard" element={<CustomerDashboard />} />
+            <Route path="/admin-dashboard" element={<AdminDashboard />} />
             <Route path="/merchant-register" element={<MerchantRegister />} />
             <Route path="/shop" element={<Shop />} />
             <Route path="/commercial" element={<CommercialServices />} />
@@ -45,6 +49,9 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/terms" element={<TermsOfService />} />
+            <Route path="/refund" element={<RefundPolicy />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Router>

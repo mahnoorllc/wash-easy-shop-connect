@@ -12,14 +12,14 @@ const Blog = () => {
   const blogPosts = [
     {
       id: 1,
-      title: "How to Care for Your Clothes: A Complete Guide",
-      excerpt: "Learn the essential tips and tricks to keep your clothes looking fresh and lasting longer. From fabric care to proper storage techniques.",
+      title: "Best Laundry Service Near Me: How to Choose the Right One",
+      excerpt: "Discover the key factors to consider when selecting a reliable laundry service in your area. From pricing to quality, we cover everything you need to know.",
       author: "Sarah Johnson",
       date: "January 15, 2025",
       readTime: "5 min read",
-      category: "Care Tips",
+      category: "Tips & Guides",
       image: "/placeholder.svg",
-      slug: "care-for-your-clothes-guide"
+      slug: "best-laundry-service-near-me"
     },
     {
       id: 2,

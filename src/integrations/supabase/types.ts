@@ -184,29 +184,44 @@ export type Database = {
       profiles: {
         Row: {
           address: string | null
+          bio: string | null
+          business_address: string | null
+          business_name: string | null
           created_at: string | null
           full_name: string | null
           id: string
           phone: string | null
           role: Database["public"]["Enums"]["user_role"] | null
+          service_areas: string[] | null
+          status: Database["public"]["Enums"]["user_status"] | null
           updated_at: string | null
         }
         Insert: {
           address?: string | null
+          bio?: string | null
+          business_address?: string | null
+          business_name?: string | null
           created_at?: string | null
           full_name?: string | null
           id: string
           phone?: string | null
           role?: Database["public"]["Enums"]["user_role"] | null
+          service_areas?: string[] | null
+          status?: Database["public"]["Enums"]["user_status"] | null
           updated_at?: string | null
         }
         Update: {
           address?: string | null
+          bio?: string | null
+          business_address?: string | null
+          business_name?: string | null
           created_at?: string | null
           full_name?: string | null
           id?: string
           phone?: string | null
           role?: Database["public"]["Enums"]["user_role"] | null
+          service_areas?: string[] | null
+          status?: Database["public"]["Enums"]["user_status"] | null
           updated_at?: string | null
         }
         Relationships: []
@@ -327,6 +342,14 @@ export type Database = {
         }
         Returns: string
       }
+      current_user_has_role: {
+        Args: { check_role: Database["public"]["Enums"]["user_role"] }
+        Returns: boolean
+      }
+      get_current_user_role: {
+        Args: Record<PropertyKey, never>
+        Returns: Database["public"]["Enums"]["user_role"]
+      }
       get_user_bookings: {
         Args: { user_id: string }
         Returns: {
@@ -349,6 +372,10 @@ export type Database = {
           updated_at: string
         }[]
       }
+      is_current_user_approved_provider: {
+        Args: Record<PropertyKey, never>
+        Returns: boolean
+      }
       update_booking_status: {
         Args: { booking_id: string; new_status: string }
         Returns: boolean
@@ -365,6 +392,7 @@ export type Database = {
         | "cancelled"
       service_type: "wash_fold" | "dry_cleaning" | "express" | "delicate"
       user_role: "customer" | "merchant" | "admin"
+      user_status: "active" | "pending" | "suspended"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -503,6 +531,7 @@ export const Constants = {
       ],
       service_type: ["wash_fold", "dry_cleaning", "express", "delicate"],
       user_role: ["customer", "merchant", "admin"],
+      user_status: ["active", "pending", "suspended"],
     },
   },
 } as const

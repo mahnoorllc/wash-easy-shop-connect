@@ -90,9 +90,9 @@ const AuthPage = () => {
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="login" className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="login">Login</TabsTrigger>
-              <TabsTrigger value="register">Register</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-2 mb-6">
+              <TabsTrigger value="login" className="data-[state=active]:bg-blue-600 data-[state=active]:text-white">Sign In</TabsTrigger>
+              <TabsTrigger value="register" className="data-[state=active]:bg-blue-600 data-[state=active]:text-white">Create Account</TabsTrigger>
             </TabsList>
             
             <TabsContent value="login">

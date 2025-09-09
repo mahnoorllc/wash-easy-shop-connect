@@ -43,7 +43,7 @@ export const Footer = () => {
 
       <footer className="bg-gray-900 text-white relative">
         <div className="max-w-7xl mx-auto px-4 py-12 md:py-16">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {/* Company Info */}
             <div className="space-y-4 text-center md:text-left">
               <div className="flex items-center justify-center md:justify-start space-x-2">
@@ -58,6 +58,18 @@ export const Footer = () => {
               <p className="text-gray-400 text-sm leading-relaxed max-w-md mx-auto md:mx-0">
                 Professional laundry services and premium accessories delivered to your doorstep.
               </p>
+            </div>
+
+            {/* Quick Links */}
+            <div className="space-y-4 text-center md:text-left">
+              <h3 className="text-lg font-semibold">Quick Links</h3>
+              <div className="space-y-2 text-sm text-gray-400">
+                <a href="/" className="block hover:text-white transition-colors">Home</a>
+                <a href="/about" className="block hover:text-white transition-colors">About Us</a>
+                <a href="/blog" className="block hover:text-white transition-colors">Blog</a>
+                <a href="/contact" className="block hover:text-white transition-colors">Contact</a>
+                <a href="/merchant-register" className="block hover:text-white transition-colors font-medium text-blue-400">Become a Provider</a>
+              </div>
             </div>
 
             {/* Services */}

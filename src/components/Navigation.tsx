@@ -199,19 +199,6 @@ export const Navigation = () => {
                   </Link>
                 </NavigationMenuItem>
 
-                {/* Show "Become a Partner" for guests and customers only */}
-                {!isMerchant && (
-                  <NavigationMenuItem>
-                    <Link 
-                      to="/merchant-register"
-                      className={`px-3 py-2 text-sm font-medium transition-colors hover:text-blue-600 ${
-                        isActive('/merchant-register') ? 'text-blue-600' : 'text-gray-700'
-                      }`}
-                    >
-                      Become a Partner
-                    </Link>
-                  </NavigationMenuItem>
-                )}
 
                 {/* Show Contact for all except merchants get different positioning */}
                 {!isMerchant && (
@@ -344,18 +331,6 @@ export const Navigation = () => {
                       Shop
                     </Link>
                     
-                    {/* Show "Become a Partner" for guests and customers only */}
-                    {!isMerchant && (
-                      <Link
-                        to="/merchant-register"
-                        onClick={() => setIsOpen(false)}
-                        className={`px-4 py-3 text-lg font-medium transition-colors hover:text-blue-600 ${
-                          isActive('/merchant-register') ? 'text-blue-600 bg-blue-50 rounded-md' : 'text-gray-700'
-                        }`}
-                      >
-                        Become a Partner
-                      </Link>
-                    )}
                     
                     <Link
                       to="/contact"

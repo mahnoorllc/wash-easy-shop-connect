@@ -34,6 +34,7 @@ export type Database = {
           special_requirements: string | null
           status: string | null
           updated_at: string | null
+          user_id: string | null
         }
         Insert: {
           admin_notes?: string | null
@@ -54,6 +55,7 @@ export type Database = {
           special_requirements?: string | null
           status?: string | null
           updated_at?: string | null
+          user_id?: string | null
         }
         Update: {
           admin_notes?: string | null
@@ -74,6 +76,7 @@ export type Database = {
           special_requirements?: string | null
           status?: string | null
           updated_at?: string | null
+          user_id?: string | null
         }
         Relationships: []
       }

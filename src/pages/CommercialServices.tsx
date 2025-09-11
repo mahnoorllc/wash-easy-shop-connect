@@ -13,10 +13,12 @@ import { Building2, Users, Clock, Star, Truck, Calculator } from "lucide-react";
 import { useServicePricing } from "@/hooks/useServicePricing";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
 
 const CommercialServices = () => {
   const { pricing, loading: pricingLoading } = useServicePricing();
   const { toast } = useToast();
+  const { user } = useAuth();
   
   const [quoteForm, setQuoteForm] = useState({
     business_name: '',
@@ -56,7 +58,8 @@ const CommercialServices = () => {
           frequency: quoteForm.frequency,
           special_requirements: quoteForm.special_requirements,
           business_address: quoteForm.business_address || 'Not provided',
-          status: 'pending'
+          status: 'pending',
+          user_id: user?.id || null // Link to authenticated user or null for anonymous
         }]);
 
       if (error) throw error;

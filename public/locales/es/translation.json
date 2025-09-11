@@ -1,0 +1,150 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "services": "Servicios",
+    "residential": "Residencial",
+    "commercial": "Comercial",
+    "shop": "Tienda",
+    "contact": "Contacto",
+    "login": "Iniciar Sesión",
+    "signup": "Registrarse",
+    "logout": "Cerrar Sesión",
+    "dashboard": "Panel",
+    "profile": "Perfil",
+    "myOrders": "Mis Pedidos",
+    "trackOrder": "Rastrear Pedido",
+    "storeProfile": "Perfil de Tienda",
+    "earnings": "Ganancias",
+    "settings": "Configuración",
+    "becomeProvider": "Convertirse en Proveedor"
+  },
+  "hero": {
+    "title": "Servicio de Lavandería Profesional con Recogida y Entrega Gratuita",
+    "subtitle": "Experimenta un servicio de lavandería sin complicaciones con nuestra red de socios locales confiables. Servicio el mismo día disponible.",
+    "bookNow": "Reservar Ahora",
+    "learnMore": "Saber Más"
+  },
+  "services": {
+    "title": "Nuestros Servicios",
+    "washFold": {
+      "title": "Lavar y Doblar",
+      "description": "Servicio profesional de lavado y doblado con detergentes ecológicos"
+    },
+    "dryCleaning": {
+      "title": "Limpieza en Seco",
+      "description": "Limpieza en seco experta para telas delicadas y ropa formal"
+    },
+    "express": {
+      "title": "Servicio Express",
+      "description": "Servicio el mismo día para necesidades urgentes de lavandería"
+    }
+  },
+  "howItWorks": {
+    "title": "Cómo Funciona",
+    "step1": {
+      "title": "Programar Recogida",
+      "description": "Reserva un horario de recogida conveniente a través de nuestra plataforma"
+    },
+    "step2": {
+      "title": "Recolectamos",
+      "description": "Nuestro socio recoge tu ropa desde tu ubicación"
+    },
+    "step3": {
+      "title": "Limpieza Profesional",
+      "description": "Limpieza experta usando productos premium y ecológicos"
+    },
+    "step4": {
+      "title": "Entrega Fresca",
+      "description": "Ropa limpia y fresca entregada de vuelta a ti"
+    }
+  },
+  "benefits": {
+    "title": "¿Por Qué Elegir WashEasy?",
+    "convenience": {
+      "title": "Máxima Conveniencia",
+      "description": "Programa recogidas y entregas que se ajusten a tu estilo de vida ocupado"
+    },
+    "quality": {
+      "title": "Calidad Premium",
+      "description": "Limpieza profesional con atención a cada detalle"
+    },
+    "eco": {
+      "title": "Ecológico",
+      "description": "Productos y procesos de limpieza conscientes del medio ambiente"
+    },
+    "trusted": {
+      "title": "Socios Confiables",
+      "description": "Proveedores de servicios de lavandería verificados y confiables en tu área"
+    }
+  },
+  "pricing": {
+    "title": "Precios del Servicio",
+    "washFoldPrice": "$1.50 por libra",
+    "dryCleaningPrice": "$8-15 por artículo",
+    "expressPrice": "+50% recargo"
+  },
+  "footer": {
+    "quickLinks": "Enlaces Rápidos",
+    "about": "Acerca de",
+    "services": "Servicios",
+    "pricing": "Precios",
+    "blog": "Blog",
+    "contact": "Contacto",
+    "support": "Soporte",
+    "privacyPolicy": "Política de Privacidad",
+    "termsOfService": "Términos de Servicio",
+    "refundPolicy": "Política de Reembolso",
+    "followUs": "Síguenos",
+    "allRightsReserved": "Todos los derechos reservados."
+  },
+  "auth": {
+    "welcome": "Bienvenido a WashEasy",
+    "signInTitle": "Inicia sesión en tu cuenta",
+    "signUpTitle": "Crea tu cuenta",
+    "email": "Correo Electrónico",
+    "password": "Contraseña",
+    "fullName": "Nombre Completo",
+    "phone": "Número de Teléfono",
+    "signIn": "Iniciar Sesión",
+    "signUp": "Registrarse",
+    "alreadyHaveAccount": "¿Ya tienes una cuenta?",
+    "dontHaveAccount": "¿No tienes una cuenta?",
+    "signInHere": "Inicia sesión aquí",
+    "signUpHere": "Regístrate aquí",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "resetPassword": "Restablecer Contraseña",
+    "rememberMe": "Recuérdame"
+  },
+  "booking": {
+    "title": "Reserva tu Servicio de Lavandería",
+    "selectService": "Seleccionar Servicio",
+    "pickupDate": "Fecha de Recogida",
+    "pickupTime": "Hora de Recogida",
+    "pickupAddress": "Dirección de Recogida",
+    "deliveryAddress": "Dirección de Entrega",
+    "specialInstructions": "Instrucciones Especiales",
+    "estimatedWeight": "Peso Estimado (libras)",
+    "bookService": "Reservar Servicio",
+    "serviceBooked": "¡Servicio reservado exitosamente!"
+  },
+  "common": {
+    "loading": "Cargando...",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "confirm": "Confirmar",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "submit": "Enviar",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "sort": "Ordenar",
+    "noResults": "No se encontraron resultados",
+    "error": "Ocurrió un error",
+    "success": "¡Éxito!",
+    "warning": "Advertencia",
+    "info": "Información"
+  }
+}

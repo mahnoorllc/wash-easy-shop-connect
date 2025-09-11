@@ -1,0 +1,150 @@
+{
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "residential": "Residential",
+    "commercial": "Commercial",
+    "shop": "Shop",
+    "contact": "Contact",
+    "login": "Login",
+    "signup": "Sign Up",
+    "logout": "Logout",
+    "dashboard": "Dashboard",
+    "profile": "Profile",
+    "myOrders": "My Orders",
+    "trackOrder": "Track Order",
+    "storeProfile": "Store Profile",
+    "earnings": "Earnings",
+    "settings": "Settings",
+    "becomeProvider": "Become a Provider"
+  },
+  "hero": {
+    "title": "Professional Laundry Service with Free Pickup & Delivery",
+    "subtitle": "Experience hassle-free laundry service with our network of trusted local partners. Same-day service available.",
+    "bookNow": "Book Now",
+    "learnMore": "Learn More"
+  },
+  "services": {
+    "title": "Our Services",
+    "washFold": {
+      "title": "Wash & Fold",
+      "description": "Professional wash and fold service with eco-friendly detergents"
+    },
+    "dryCleaning": {
+      "title": "Dry Cleaning",
+      "description": "Expert dry cleaning for delicate fabrics and formal wear"
+    },
+    "express": {
+      "title": "Express Service",
+      "description": "Same-day service for urgent laundry needs"
+    }
+  },
+  "howItWorks": {
+    "title": "How It Works",
+    "step1": {
+      "title": "Schedule Pickup",
+      "description": "Book a convenient pickup time through our platform"
+    },
+    "step2": {
+      "title": "We Collect",
+      "description": "Our partner picks up your laundry from your location"
+    },
+    "step3": {
+      "title": "Professional Cleaning",
+      "description": "Expert cleaning using premium, eco-friendly products"
+    },
+    "step4": {
+      "title": "Fresh Delivery",
+      "description": "Clean, fresh laundry delivered back to you"
+    }
+  },
+  "benefits": {
+    "title": "Why Choose WashEasy?",
+    "convenience": {
+      "title": "Ultimate Convenience",
+      "description": "Schedule pickups and deliveries that fit your busy lifestyle"
+    },
+    "quality": {
+      "title": "Premium Quality",
+      "description": "Professional cleaning with attention to every detail"
+    },
+    "eco": {
+      "title": "Eco-Friendly",
+      "description": "Environmentally conscious cleaning products and processes"
+    },
+    "trusted": {
+      "title": "Trusted Partners",
+      "description": "Vetted and reliable laundry service providers in your area"
+    }
+  },
+  "pricing": {
+    "title": "Service Pricing",
+    "washFoldPrice": "$1.50 per lb",
+    "dryCleaningPrice": "$8-15 per item",
+    "expressPrice": "+50% surcharge"
+  },
+  "footer": {
+    "quickLinks": "Quick Links",
+    "about": "About",
+    "services": "Services",
+    "pricing": "Pricing",
+    "blog": "Blog",
+    "contact": "Contact",
+    "support": "Support",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "refundPolicy": "Refund Policy",
+    "followUs": "Follow Us",
+    "allRightsReserved": "All rights reserved."
+  },
+  "auth": {
+    "welcome": "Welcome to WashEasy",
+    "signInTitle": "Sign in to your account",
+    "signUpTitle": "Create your account",
+    "email": "Email",
+    "password": "Password",
+    "fullName": "Full Name",
+    "phone": "Phone Number",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "alreadyHaveAccount": "Already have an account?",
+    "dontHaveAccount": "Don't have an account?",
+    "signInHere": "Sign in here",
+    "signUpHere": "Sign up here",
+    "forgotPassword": "Forgot your password?",
+    "resetPassword": "Reset Password",
+    "rememberMe": "Remember me"
+  },
+  "booking": {
+    "title": "Book Your Laundry Service",
+    "selectService": "Select Service",
+    "pickupDate": "Pickup Date",
+    "pickupTime": "Pickup Time",
+    "pickupAddress": "Pickup Address",
+    "deliveryAddress": "Delivery Address",
+    "specialInstructions": "Special Instructions",
+    "estimatedWeight": "Estimated Weight (lbs)",
+    "bookService": "Book Service",
+    "serviceBooked": "Service booked successfully!"
+  },
+  "common": {
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "submit": "Submit",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "noResults": "No results found",
+    "error": "An error occurred",
+    "success": "Success!",
+    "warning": "Warning",
+    "info": "Information"
+  }
+}

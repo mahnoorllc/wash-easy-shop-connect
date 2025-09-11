@@ -1,0 +1,150 @@
+{
+  "nav": {
+    "home": "الرئيسية",
+    "services": "الخدمات",
+    "residential": "سكني",
+    "commercial": "تجاري",
+    "shop": "المتجر",
+    "contact": "اتصل بنا",
+    "login": "تسجيل الدخول",
+    "signup": "إنشاء حساب",
+    "logout": "تسجيل الخروج",
+    "dashboard": "لوحة التحكم",
+    "profile": "الملف الشخصي",
+    "myOrders": "طلباتي",
+    "trackOrder": "تتبع الطلب",
+    "storeProfile": "ملف المتجر",
+    "earnings": "الأرباح",
+    "settings": "الإعدادات",
+    "becomeProvider": "كن مقدم خدمة"
+  },
+  "hero": {
+    "title": "خدمة غسيل ملابس احترافية مع استلام وتوصيل مجاني",
+    "subtitle": "استمتع بخدمة غسيل ملابس خالية من المتاعب مع شبكة شركائنا الموثوقين محلياً. خدمة في نفس اليوم متاحة.",
+    "bookNow": "احجز الآن",
+    "learnMore": "اعرف المزيد"
+  },
+  "services": {
+    "title": "خدماتنا",
+    "washFold": {
+      "title": "غسيل وطي",
+      "description": "خدمة غسيل وطي احترافية بمنظفات صديقة للبيئة"
+    },
+    "dryCleaning": {
+      "title": "التنظيف الجاف",
+      "description": "تنظيف جاف خبير للأقمشة الحساسة والملابس الرسمية"
+    },
+    "express": {
+      "title": "خدمة سريعة",
+      "description": "خدمة في نفس اليوم لاحتياجات الغسيل العاجلة"
+    }
+  },
+  "howItWorks": {
+    "title": "كيف تعمل الخدمة",
+    "step1": {
+      "title": "جدولة الاستلام",
+      "description": "احجز وقت استلام مناسب من خلال منصتنا"
+    },
+    "step2": {
+      "title": "نحن نجمع",
+      "description": "شريكنا يستلم ملابسك من موقعك"
+    },
+    "step3": {
+      "title": "تنظيف احترافي",
+      "description": "تنظيف خبير باستخدام منتجات عالية الجودة وصديقة للبيئة"
+    },
+    "step4": {
+      "title": "توصيل منعش",
+      "description": "ملابس نظيفة ومنعشة تُسلم إليك"
+    }
+  },
+  "benefits": {
+    "title": "لماذا تختار واش إيزي؟",
+    "convenience": {
+      "title": "راحة قصوى",
+      "description": "جدولة استلام وتوصيل تناسب نمط حياتك المزدحم"
+    },
+    "quality": {
+      "title": "جودة عالية",
+      "description": "تنظيف احترافي مع الاهتمام بكل التفاصيل"
+    },
+    "eco": {
+      "title": "صديق للبيئة",
+      "description": "منتجات وعمليات تنظيف واعية بيئياً"
+    },
+    "trusted": {
+      "title": "شركاء موثوقون",
+      "description": "مقدمو خدمات غسيل ملابس موثوقون ومدققون في منطقتك"
+    }
+  },
+  "pricing": {
+    "title": "أسعار الخدمة",
+    "washFoldPrice": "1.50$ للباوند",
+    "dryCleaningPrice": "8-15$ للقطعة",
+    "expressPrice": "+50% رسوم إضافية"
+  },
+  "footer": {
+    "quickLinks": "روابط سريعة",
+    "about": "حول",
+    "services": "الخدمات",
+    "pricing": "الأسعار",
+    "blog": "المدونة",
+    "contact": "اتصل بنا",
+    "support": "الدعم",
+    "privacyPolicy": "سياسة الخصوصية",
+    "termsOfService": "شروط الخدمة",
+    "refundPolicy": "سياسة الاسترداد",
+    "followUs": "تابعنا",
+    "allRightsReserved": "جميع الحقوق محفوظة."
+  },
+  "auth": {
+    "welcome": "مرحباً بك في واش إيزي",
+    "signInTitle": "تسجيل الدخول إلى حسابك",
+    "signUpTitle": "إنشاء حسابك",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "fullName": "الاسم الكامل",
+    "phone": "رقم الهاتف",
+    "signIn": "تسجيل الدخول",
+    "signUp": "إنشاء حساب",
+    "alreadyHaveAccount": "لديك حساب بالفعل؟",
+    "dontHaveAccount": "ليس لديك حساب؟",
+    "signInHere": "سجل الدخول هنا",
+    "signUpHere": "أنشئ حساباً هنا",
+    "forgotPassword": "نسيت كلمة المرور؟",
+    "resetPassword": "إعادة تعيين كلمة المرور",
+    "rememberMe": "تذكرني"
+  },
+  "booking": {
+    "title": "احجز خدمة غسيل الملابس",
+    "selectService": "اختر الخدمة",
+    "pickupDate": "تاريخ الاستلام",
+    "pickupTime": "وقت الاستلام",
+    "pickupAddress": "عنوان الاستلام",
+    "deliveryAddress": "عنوان التوصيل",
+    "specialInstructions": "تعليمات خاصة",
+    "estimatedWeight": "الوزن المقدر (باوند)",
+    "bookService": "احجز الخدمة",
+    "serviceBooked": "تم حجز الخدمة بنجاح!"
+  },
+  "common": {
+    "loading": "جاري التحميل...",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "edit": "تعديل",
+    "delete": "حذف",
+    "confirm": "تأكيد",
+    "back": "رجوع",
+    "next": "التالي",
+    "previous": "السابق",
+    "submit": "إرسال",
+    "search": "بحث",
+    "filter": "تصفية",
+    "sort": "ترتيب",
+    "noResults": "لم يتم العثور على نتائج",
+    "error": "حدث خطأ",
+    "success": "نجح!",
+    "warning": "تحذير",
+    "info": "معلومات"
+  }
+}

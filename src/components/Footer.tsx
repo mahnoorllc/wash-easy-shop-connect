@@ -129,7 +129,7 @@ export const Footer = () => {
             {/* Desktop layout */}
             <div className="hidden md:flex justify-between items-center">
               <p className="text-sm text-gray-400">
-                © 2025 WashEasy. All rights reserved.
+                © 2025 WashEasy. Mahnoor LLC. All rights reserved.
               </p>
               <div className="flex items-center space-x-6 text-sm text-gray-400">
                 <a href="/privacy" className="hover:text-white transition-colors">Privacy Policy</a>

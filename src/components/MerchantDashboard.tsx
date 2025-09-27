@@ -57,43 +57,69 @@ export const MerchantDashboard = () => {
     try {
       setLoading(true);
       
-      // For now, we'll use a mock data structure since the bookings table relationship isn't properly set up
-      // In a real implementation, you would use the get_user_bookings function or create a get_merchant_bookings function
-      const mockBookings: MerchantBooking[] = [
-        {
-          id: '1',
-          customer_id: 'customer1',
-          booking_date: '2024-01-15',
-          booking_time: '10:00',
-          status: 'pending',
-          customer_address: '123 Main St, City, State 12345',
-          notes: 'Please handle delicate items with care',
-          created_at: '2024-01-10T10:00:00Z',
-          customer_profile: {
-            full_name: 'John Doe',
-            phone: '(555) 123-4567'
-          }
-        },
-        {
-          id: '2',
-          customer_id: 'customer2',
-          booking_date: '2024-01-16',
-          booking_time: '14:00',
-          status: 'confirmed',
-          customer_address: '456 Oak Ave, City, State 12345',
-          notes: '',
-          created_at: '2024-01-11T14:00:00Z',
-          customer_profile: {
-            full_name: 'Jane Smith',
-            phone: '(555) 987-6543'
-          }
-        }
-      ];
+      // Get merchant profile first
+      const { data: merchantData, error: merchantError } = await supabase
+        .from('merchants')
+        .select('id')
+        .eq('user_id', user.id)
+        .single();
 
-      setBookings(mockBookings);
+      if (merchantError || !merchantData) {
+        console.error('Error getting merchant profile:', merchantError);
+        setBookings([]);
+        return;
+      }
+
+      // Fetch bookings for this merchant
+      const { data: bookingsData, error: bookingsError } = await supabase
+        .from('bookings')
+        .select('*')
+        .eq('merchant_id', merchantData.id)
+        .order('created_at', { ascending: false });
+
+      if (bookingsError) {
+        console.error('Error fetching bookings:', bookingsError);
+        toast.error('Failed to load bookings');
+        setBookings([]);
+        return;
+      }
+
+      // Get customer profiles separately
+      const customerIds = bookingsData?.map(b => b.customer_id) || [];
+      const { data: customerProfiles } = await supabase
+        .from('profiles')
+        .select('id, full_name, phone')
+        .in('id', customerIds);
+
+      // Create a map for quick lookup
+      const customerMap = new Map();
+      customerProfiles?.forEach(profile => {
+        customerMap.set(profile.id, profile);
+      });
+
+      const formattedBookings: MerchantBooking[] = bookingsData?.map(booking => ({
+        id: booking.id,
+        customer_id: booking.customer_id,
+        booking_date: booking.booking_date,
+        booking_time: booking.booking_time,
+        status: booking.status,
+        customer_address: booking.customer_address || 'No address provided',
+        notes: booking.notes || '',
+        created_at: booking.created_at,
+        customer_profile: customerMap.has(booking.customer_id) ? {
+          full_name: customerMap.get(booking.customer_id).full_name || 'Unknown Customer',
+          phone: customerMap.get(booking.customer_id).phone || 'No phone provided'
+        } : {
+          full_name: 'Unknown Customer',
+          phone: 'No phone provided'
+        }
+      })) || [];
+
+      setBookings(formattedBookings);
     } catch (error) {
       console.error('Error fetching bookings:', error);
       toast.error('Failed to load bookings');
+      setBookings([]);
     } finally {
       setLoading(false);
     }

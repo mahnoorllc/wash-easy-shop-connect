@@ -67,9 +67,9 @@ export const BookingForm = () => {
 
       if (orderError) throw orderError;
 
-      // Create the booking using RPC function with type assertion
+      // Create the booking with proper error handling
       try {
-        const { error: bookingError } = await (supabase as any).rpc('create_booking', {
+        const { data: bookingData, error: bookingError } = await supabase.rpc('create_booking', {
           p_customer_id: user.id,
           p_merchant_id: selectedMerchantId,
           p_laundry_order_id: orderData.id,
@@ -80,11 +80,15 @@ export const BookingForm = () => {
         });
 
         if (bookingError) {
-          console.log('Booking error:', bookingError);
-          // Continue without booking table for now
+          console.error('Booking error:', bookingError);
+          toast.error('Order created, but booking failed. Please contact support.');
+        } else {
+          console.log('Booking created successfully:', bookingData);
+          toast.success('Order and booking created successfully! The merchant will confirm your appointment soon.');
         }
       } catch (bookingErr) {
-        console.log('Booking creation failed, continuing without booking record');
+        console.log('Booking creation failed:', bookingErr);
+        toast.error('Order created, but booking failed. Please contact support.');
       }
 
       toast.success('Order placed successfully! The merchant will confirm your appointment soon.');

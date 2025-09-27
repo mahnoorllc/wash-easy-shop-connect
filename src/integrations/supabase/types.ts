@@ -14,6 +14,78 @@ export type Database = {
   }
   public: {
     Tables: {
+      bookings: {
+        Row: {
+          booking_date: string
+          booking_time: string
+          created_at: string
+          customer_address: string | null
+          customer_id: string
+          customer_latitude: number | null
+          customer_longitude: number | null
+          duration_minutes: number | null
+          estimated_distance_km: number | null
+          estimated_travel_time_minutes: number | null
+          id: string
+          laundry_order_id: string | null
+          merchant_id: string
+          notes: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          booking_date: string
+          booking_time: string
+          created_at?: string
+          customer_address?: string | null
+          customer_id: string
+          customer_latitude?: number | null
+          customer_longitude?: number | null
+          duration_minutes?: number | null
+          estimated_distance_km?: number | null
+          estimated_travel_time_minutes?: number | null
+          id?: string
+          laundry_order_id?: string | null
+          merchant_id: string
+          notes?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          booking_date?: string
+          booking_time?: string
+          created_at?: string
+          customer_address?: string | null
+          customer_id?: string
+          customer_latitude?: number | null
+          customer_longitude?: number | null
+          duration_minutes?: number | null
+          estimated_distance_km?: number | null
+          estimated_travel_time_minutes?: number | null
+          id?: string
+          laundry_order_id?: string | null
+          merchant_id?: string
+          notes?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bookings_laundry_order_id_fkey"
+            columns: ["laundry_order_id"]
+            isOneToOne: false
+            referencedRelation: "laundry_orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bookings_merchant_id_fkey"
+            columns: ["merchant_id"]
+            isOneToOne: false
+            referencedRelation: "merchants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       commercial_quotes: {
         Row: {
           admin_notes: string | null

@@ -21,6 +21,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Menu, User, Store, Truck, ChevronDown, Package, MapPin, CreditCard, MessageCircle, Settings, BarChart3, LogOut } from 'lucide-react';
+import { LanguageSwitcher } from './LanguageSwitcher';
 
 export const Navigation = () => {
   const { user, signOut } = useAuth();
@@ -244,6 +245,7 @@ export const Navigation = () => {
 
             {/* Auth Section */}
             <div className="flex items-center space-x-4">
+              <LanguageSwitcher />
               {!user ? (
                 <div className="flex items-center space-x-2">
                   <Button variant="ghost" size="sm" asChild>
@@ -268,6 +270,7 @@ export const Navigation = () => {
 
           {/* Mobile Navigation */}
           <div className="md:hidden flex items-center space-x-2">
+            <LanguageSwitcher />
             {/* Mobile Auth Button for guests */}
             {!user && (
               <div className="flex items-center space-x-1">

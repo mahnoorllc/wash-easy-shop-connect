@@ -7,7 +7,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { BarChart3, Users, ShoppingBag, Settings, Monitor, Store } from 'lucide-react';
+import { BarChart3, Users, ShoppingBag, Settings, Monitor, Store, Package } from 'lucide-react';
+import { ProductManagement } from '@/components/ProductManagement';
+import { SaleNotifications } from '@/components/SaleNotifications';
 
 const AdminDashboard = () => {
   return (
@@ -21,18 +23,22 @@ const AdminDashboard = () => {
           </div>
 
           <Tabs defaultValue="overview" className="w-full">
-            <TabsList className="grid w-full grid-cols-5">
+            <TabsList className="grid w-full grid-cols-6">
               <TabsTrigger value="overview" className="flex items-center gap-2">
                 <BarChart3 className="w-4 h-4" />
                 Overview
               </TabsTrigger>
+              <TabsTrigger value="products" className="flex items-center gap-2">
+                <Package className="w-4 h-4" />
+                Products
+              </TabsTrigger>
+              <TabsTrigger value="sales" className="flex items-center gap-2">
+                <ShoppingBag className="w-4 h-4" />
+                Sales
+              </TabsTrigger>
               <TabsTrigger value="users" className="flex items-center gap-2">
                 <Users className="w-4 h-4" />
                 Users
-              </TabsTrigger>
-              <TabsTrigger value="orders" className="flex items-center gap-2">
-                <ShoppingBag className="w-4 h-4" />
-                Orders
               </TabsTrigger>
               <TabsTrigger value="health" className="flex items-center gap-2">
                 <Monitor className="w-4 h-4" />
@@ -145,6 +151,14 @@ const AdminDashboard = () => {
                   </CardContent>
                 </Card>
               </div>
+            </TabsContent>
+
+            <TabsContent value="products" className="space-y-6">
+              <ProductManagement />
+            </TabsContent>
+
+            <TabsContent value="sales" className="space-y-6">
+              <SaleNotifications />
             </TabsContent>
 
             <TabsContent value="users" className="space-y-6">

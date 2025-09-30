@@ -3,9 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Star, MapPin, Clock, Shield } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 
 export const Hero = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <section className="relative py-12 md:py-20 px-4 overflow-hidden">
@@ -23,11 +25,11 @@ export const Hero = () => {
                 🎉 Now Available in Your Area
               </Badge>
               <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-gray-900 leading-tight">
-                Professional Laundry Service at Your
+                {t('hero.title')}
                 <span className="text-blue-600"> Doorstep</span>
               </h1>
               <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
-                Connect with trusted local laundry partners for pickup, wash, and delivery services. Plus shop premium laundry accessories - all in one platform.
+                {t('hero.subtitle')}
               </p>
             </div>
 
@@ -58,7 +60,7 @@ export const Hero = () => {
                 className="bg-blue-600 hover:bg-blue-700 px-6 md:px-8 py-3 md:py-4 text-base md:text-lg text-white"
                 onClick={() => navigate('/customer-dashboard')}
               >
-                Order Laundry Now
+                {t('hero.bookNow')}
               </Button>
               <Button 
                 variant="outline" 
@@ -66,7 +68,7 @@ export const Hero = () => {
                 className="px-6 md:px-8 py-3 md:py-4 text-base md:text-lg border-blue-600 text-blue-600 hover:bg-blue-50"
                 onClick={() => navigate('/merchant-register')}
               >
-                Become a Partner
+                {t('nav.becomeProvider')}
               </Button>
             </div>
 

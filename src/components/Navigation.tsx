@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useProfile } from '@/hooks/useProfile';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { 
   NavigationMenu, 
@@ -29,6 +30,7 @@ export const Navigation = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
+  const { t } = useTranslation();
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -55,25 +57,25 @@ export const Navigation = () => {
         <DropdownMenuItem asChild>
           <Link to="/dashboard" className="flex items-center">
             <Package className="w-4 h-4 mr-2" />
-            My Orders
+            {t('nav.myOrders')}
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link to="/dashboard" className="flex items-center">
             <MapPin className="w-4 h-4 mr-2" />
-            Track Order
+            {t('nav.trackOrder')}
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link to="/dashboard" className="flex items-center">
             <User className="w-4 h-4 mr-2" />
-            Profile
+            {t('nav.profile')}
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleSignOut} className="text-red-600 focus:text-red-600">
           <LogOut className="w-4 h-4 mr-2" />
-          Logout
+          {t('nav.logout')}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
@@ -91,25 +93,25 @@ export const Navigation = () => {
         <DropdownMenuItem asChild>
           <Link to="/merchant-dashboard" className="flex items-center">
             <Store className="w-4 h-4 mr-2" />
-            Store Profile
+            {t('nav.storeProfile')}
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link to="/merchant-dashboard" className="flex items-center">
             <BarChart3 className="w-4 h-4 mr-2" />
-            Earnings
+            {t('nav.earnings')}
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link to="/merchant-dashboard" className="flex items-center">
             <Settings className="w-4 h-4 mr-2" />
-            Settings
+            {t('nav.settings')}
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleSignOut} className="text-red-600 focus:text-red-600">
           <LogOut className="w-4 h-4 mr-2" />
-          Logout
+          {t('nav.logout')}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
@@ -138,13 +140,13 @@ export const Navigation = () => {
                       isActive('/') ? 'text-blue-600' : 'text-gray-700'
                     }`}
                   >
-                    Home
+                    {t('nav.home')}
                   </Link>
                 </NavigationMenuItem>
 
                 <NavigationMenuItem>
                   <NavigationMenuTrigger className="text-sm font-medium">
-                    Services
+                    {t('nav.services')}
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <div className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
@@ -168,7 +170,7 @@ export const Navigation = () => {
                           to="/residential"
                           className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                         >
-                          <div className="text-sm font-medium leading-none">Residential</div>
+                          <div className="text-sm font-medium leading-none">{t('nav.residential')}</div>
                           <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                             Home laundry services including wash & fold, dry cleaning, and express service.
                           </p>
@@ -179,7 +181,7 @@ export const Navigation = () => {
                           to="/commercial"
                           className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                         >
-                          <div className="text-sm font-medium leading-none">Commercial</div>
+                          <div className="text-sm font-medium leading-none">{t('nav.commercial')}</div>
                           <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                             Business laundry solutions for hotels, restaurants, and offices.
                           </p>
@@ -196,7 +198,7 @@ export const Navigation = () => {
                       isActive('/shop') ? 'text-blue-600' : 'text-gray-700'
                     }`}
                   >
-                    Shop
+                    {t('nav.shop')}
                   </Link>
                 </NavigationMenuItem>
 
@@ -209,9 +211,9 @@ export const Navigation = () => {
                       className={`px-3 py-2 text-sm font-medium transition-colors hover:text-blue-600 ${
                         isActive('/contact') ? 'text-blue-600' : 'text-gray-700'
                       }`}
-                    >
-                      Contact
-                    </Link>
+                      >
+                        {t('nav.contact')}
+                      </Link>
                   </NavigationMenuItem>
                 )}
 
@@ -249,10 +251,10 @@ export const Navigation = () => {
               {!user ? (
                 <div className="flex items-center space-x-2">
                   <Button variant="ghost" size="sm" asChild>
-                    <Link to="/auth">Login</Link>
+                    <Link to="/auth">{t('nav.login')}</Link>
                   </Button>
                   <Button size="sm" asChild className="bg-blue-600 hover:bg-blue-700">
-                    <Link to="/auth">Sign Up</Link>
+                    <Link to="/auth">{t('nav.signup')}</Link>
                   </Button>
                 </div>
               ) : isCustomer ? (
@@ -262,7 +264,7 @@ export const Navigation = () => {
               ) : (
                 <Button variant="ghost" size="sm" onClick={handleSignOut}>
                   <LogOut className="w-4 h-4 mr-2" />
-                  Logout
+                  {t('nav.logout')}
                 </Button>
               )}
             </div>

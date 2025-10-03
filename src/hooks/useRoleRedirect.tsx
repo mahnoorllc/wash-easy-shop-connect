@@ -5,12 +5,12 @@ import { useUserRole } from '@/hooks/useUserRole';
 
 export const useRoleRedirect = () => {
   const { user } = useAuth();
-  const { role, loading } = useUserRole();
+  const { role } = useUserRole();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user && !loading && role) {
-      // Redirect based on user role
+    if (user && role) {
+      // Redirect based on user role from user_roles table
       switch (role) {
         case 'admin':
           navigate('/admin-dashboard');
@@ -24,7 +24,7 @@ export const useRoleRedirect = () => {
           break;
       }
     }
-  }, [user, role, loading, navigate]);
+  }, [user, role, navigate]);
 
-  return { user, role, loading };
+  return { user, role };
 };

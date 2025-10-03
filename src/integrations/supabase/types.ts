@@ -403,6 +403,27 @@ export type Database = {
         }
         Relationships: []
       }
+      user_roles: {
+        Row: {
+          created_at: string | null
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -421,12 +442,12 @@ export type Database = {
         Returns: string
       }
       current_user_has_role: {
-        Args: { check_role: Database["public"]["Enums"]["user_role"] }
+        Args: { check_role: Database["public"]["Enums"]["app_role"] }
         Returns: boolean
       }
       get_current_user_role: {
         Args: Record<PropertyKey, never>
-        Returns: Database["public"]["Enums"]["user_role"]
+        Returns: Database["public"]["Enums"]["app_role"]
       }
       get_user_bookings: {
         Args: { user_id: string }
@@ -450,6 +471,13 @@ export type Database = {
           updated_at: string
         }[]
       }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
       is_current_user_approved_provider: {
         Args: Record<PropertyKey, never>
         Returns: boolean
@@ -460,6 +488,7 @@ export type Database = {
       }
     }
     Enums: {
+      app_role: "admin" | "merchant" | "customer"
       order_status:
         | "pending"
         | "confirmed"
@@ -598,6 +627,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      app_role: ["admin", "merchant", "customer"],
       order_status: [
         "pending",
         "confirmed",

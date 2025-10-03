@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from '@/components/ui/sonner';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { useLanguageSync } from '@/hooks/useLanguageSync';
+import { AdminRoute } from '@/components/AdminRoute';
 
 import Index from '@/pages/Index';
 import Auth from '@/pages/Auth';
@@ -44,7 +45,7 @@ function AppContent() {
         <Route path="/customer-dashboard" element={<CustomerDashboard />} />
         <Route path="/merchant-dashboard" element={<MerchantDashboard />} />
         <Route path="/provider-dashboard" element={<ProviderDashboard />} />
-        <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        <Route path="/admin-dashboard" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
         <Route path="/merchant-register" element={<MerchantRegister />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/commercial" element={<CommercialServices />} />

@@ -1,17 +1,17 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
-import { useProfile } from '@/hooks/useProfile';
+import { useUserRole } from '@/hooks/useUserRole';
 
 export const useRoleRedirect = () => {
   const { user } = useAuth();
-  const { profile } = useProfile();
+  const { role, loading } = useUserRole();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user && profile) {
+    if (user && !loading && role) {
       // Redirect based on user role
-      switch (profile.role) {
+      switch (role) {
         case 'admin':
           navigate('/admin-dashboard');
           break;
@@ -24,7 +24,7 @@ export const useRoleRedirect = () => {
           break;
       }
     }
-  }, [user, profile, navigate]);
+  }, [user, role, loading, navigate]);
 
-  return { user, profile };
+  return { user, role, loading };
 };

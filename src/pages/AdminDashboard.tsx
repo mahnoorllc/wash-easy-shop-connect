@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { BarChart3, Users, ShoppingBag, Settings, Monitor, Store, Package } from 'lucide-react';
 import { ProductManagement } from '@/components/ProductManagement';
 import { SaleNotifications } from '@/components/SaleNotifications';
+import { MerchantManagement } from '@/components/MerchantManagement';
 
 const AdminDashboard = () => {
   return (
@@ -23,10 +24,14 @@ const AdminDashboard = () => {
           </div>
 
           <Tabs defaultValue="overview" className="w-full">
-            <TabsList className="grid w-full grid-cols-6">
+            <TabsList className="grid w-full grid-cols-7">
               <TabsTrigger value="overview" className="flex items-center gap-2">
                 <BarChart3 className="w-4 h-4" />
                 Overview
+              </TabsTrigger>
+              <TabsTrigger value="merchants" className="flex items-center gap-2">
+                <Store className="w-4 h-4" />
+                Merchants
               </TabsTrigger>
               <TabsTrigger value="products" className="flex items-center gap-2">
                 <Package className="w-4 h-4" />
@@ -51,106 +56,11 @@ const AdminDashboard = () => {
             </TabsList>
 
             <TabsContent value="overview" className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">Total Users</CardTitle>
-                    <Users className="h-4 w-4 text-muted-foreground" />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">1,234</div>
-                    <p className="text-xs text-muted-foreground">+20.1% from last month</p>
-                  </CardContent>
-                </Card>
+...
+            </TabsContent>
 
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">Active Merchants</CardTitle>
-                    <Store className="h-4 w-4 text-muted-foreground" />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">89</div>
-                    <p className="text-xs text-muted-foreground">+5% from last month</p>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">Monthly Orders</CardTitle>
-                    <ShoppingBag className="h-4 w-4 text-muted-foreground" />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">2,456</div>
-                    <p className="text-xs text-muted-foreground">+12% from last month</p>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">Revenue</CardTitle>
-                    <BarChart3 className="h-4 w-4 text-muted-foreground" />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">$45,231</div>
-                    <p className="text-xs text-muted-foreground">+8% from last month</p>
-                  </CardContent>
-                </Card>
-              </div>
-
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Recent Activity</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-4">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-2">
-                          <Badge className="bg-green-100 text-green-800">New Order</Badge>
-                          <span className="text-sm">Order #1234 placed</span>
-                        </div>
-                        <span className="text-xs text-gray-500">2 min ago</span>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-2">
-                          <Badge className="bg-blue-100 text-blue-800">New User</Badge>
-                          <span className="text-sm">john.doe@email.com registered</span>
-                        </div>
-                        <span className="text-xs text-gray-500">5 min ago</span>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-2">
-                          <Badge className="bg-yellow-100 text-yellow-800">Merchant</Badge>
-                          <span className="text-sm">CleanCo awaiting approval</span>
-                        </div>
-                        <span className="text-xs text-gray-500">15 min ago</span>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Quick Actions</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-3">
-                      <Button className="w-full justify-start">
-                        <Users className="w-4 h-4 mr-2" />
-                        Approve Pending Merchants
-                      </Button>
-                      <Button variant="outline" className="w-full justify-start">
-                        <ShoppingBag className="w-4 h-4 mr-2" />
-                        Review Recent Orders
-                      </Button>
-                      <Button variant="outline" className="w-full justify-start">
-                        <Settings className="w-4 h-4 mr-2" />
-                        Update System Settings
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
+            <TabsContent value="merchants" className="space-y-6">
+              <MerchantManagement />
             </TabsContent>
 
             <TabsContent value="products" className="space-y-6">

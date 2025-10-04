@@ -7,12 +7,16 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { BarChart3, Users, ShoppingBag, Settings, Monitor, Store, Package } from 'lucide-react';
+import { BarChart3, Users, ShoppingBag, Settings, Monitor, Store, Package, DollarSign, TrendingUp, AlertCircle } from 'lucide-react';
 import { ProductManagement } from '@/components/ProductManagement';
 import { SaleNotifications } from '@/components/SaleNotifications';
 import { MerchantManagement } from '@/components/MerchantManagement';
+import { useAdminStats } from '@/hooks/useAdminStats';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const AdminDashboard = () => {
+  const { stats, loading } = useAdminStats();
+
   return (
     <ProtectedRoute>
       <div className="min-h-screen bg-gray-50">
@@ -56,7 +60,109 @@ const AdminDashboard = () => {
             </TabsList>
 
             <TabsContent value="overview" className="space-y-6">
-...
+              {loading ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                  {[1, 2, 3, 4].map((i) => (
+                    <Card key={i}>
+                      <CardContent className="p-6">
+                        <Skeleton className="h-4 w-24 mb-2" />
+                        <Skeleton className="h-8 w-16" />
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              ) : (
+                <>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <Card>
+                      <CardContent className="p-6">
+                        <div className="flex items-center justify-between mb-2">
+                          <h3 className="text-sm font-medium text-gray-600">Total Revenue</h3>
+                          <DollarSign className="w-5 h-5 text-green-600" />
+                        </div>
+                        <p className="text-2xl font-bold text-gray-900">${stats.totalRevenue.toFixed(2)}</p>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardContent className="p-6">
+                        <div className="flex items-center justify-between mb-2">
+                          <h3 className="text-sm font-medium text-gray-600">Total Customers</h3>
+                          <Users className="w-5 h-5 text-blue-600" />
+                        </div>
+                        <p className="text-2xl font-bold text-gray-900">{stats.totalCustomers}</p>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardContent className="p-6">
+                        <div className="flex items-center justify-between mb-2">
+                          <h3 className="text-sm font-medium text-gray-600">Active Merchants</h3>
+                          <Store className="w-5 h-5 text-purple-600" />
+                        </div>
+                        <p className="text-2xl font-bold text-gray-900">{stats.activeMerchants}</p>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardContent className="p-6">
+                        <div className="flex items-center justify-between mb-2">
+                          <h3 className="text-sm font-medium text-gray-600">Pending Approvals</h3>
+                          <AlertCircle className="w-5 h-5 text-yellow-600" />
+                        </div>
+                        <p className="text-2xl font-bold text-gray-900">{stats.pendingApprovals}</p>
+                      </CardContent>
+                    </Card>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <Card>
+                      <CardHeader>
+                        <CardTitle>Order Statistics</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div className="p-4 bg-yellow-50 rounded-lg">
+                            <h3 className="text-sm font-medium text-gray-600 mb-1">Pending</h3>
+                            <p className="text-2xl font-bold text-yellow-600">{stats.pendingOrders}</p>
+                          </div>
+                          <div className="p-4 bg-blue-50 rounded-lg">
+                            <h3 className="text-sm font-medium text-gray-600 mb-1">In Progress</h3>
+                            <p className="text-2xl font-bold text-blue-600">{stats.processingOrders}</p>
+                          </div>
+                          <div className="p-4 bg-green-50 rounded-lg">
+                            <h3 className="text-sm font-medium text-gray-600 mb-1">Completed</h3>
+                            <p className="text-2xl font-bold text-green-600">{stats.completedOrders}</p>
+                          </div>
+                          <div className="p-4 bg-red-50 rounded-lg">
+                            <h3 className="text-sm font-medium text-gray-600 mb-1">Issues</h3>
+                            <p className="text-2xl font-bold text-red-600">{stats.issueOrders}</p>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    <Card>
+                      <CardHeader>
+                        <CardTitle>Quick Stats</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="space-y-4">
+                          <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                            <span className="text-sm font-medium text-gray-600">Pending Quotes</span>
+                            <Badge variant="outline">{stats.pendingQuotes}</Badge>
+                          </div>
+                          <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                            <span className="text-sm font-medium text-gray-600">Total Products</span>
+                            <Badge variant="outline">{stats.totalProducts}</Badge>
+                          </div>
+                          <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                            <span className="text-sm font-medium text-gray-600">Active Products</span>
+                            <Badge variant="outline">{stats.activeProducts}</Badge>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </>
+              )}
             </TabsContent>
 
             <TabsContent value="merchants" className="space-y-6">
@@ -80,26 +186,39 @@ const AdminDashboard = () => {
                   <p className="text-gray-600 mb-4">
                     Manage customer accounts, merchant registrations, and user permissions.
                   </p>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <Card>
-                      <CardContent className="p-4">
-                        <h3 className="font-medium mb-2">Total Customers</h3>
-                        <p className="text-2xl font-bold text-blue-600">1,145</p>
-                      </CardContent>
-                    </Card>
-                    <Card>
-                      <CardContent className="p-4">
-                        <h3 className="font-medium mb-2">Active Merchants</h3>
-                        <p className="text-2xl font-bold text-green-600">89</p>
-                      </CardContent>
-                    </Card>
-                    <Card>
-                      <CardContent className="p-4">
-                        <h3 className="font-medium mb-2">Pending Approvals</h3>
-                        <p className="text-2xl font-bold text-yellow-600">12</p>
-                      </CardContent>
-                    </Card>
-                  </div>
+                  {loading ? (
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      {[1, 2, 3].map((i) => (
+                        <Card key={i}>
+                          <CardContent className="p-4">
+                            <Skeleton className="h-4 w-24 mb-2" />
+                            <Skeleton className="h-8 w-16" />
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <Card>
+                        <CardContent className="p-4">
+                          <h3 className="font-medium mb-2">Total Customers</h3>
+                          <p className="text-2xl font-bold text-blue-600">{stats.totalCustomers}</p>
+                        </CardContent>
+                      </Card>
+                      <Card>
+                        <CardContent className="p-4">
+                          <h3 className="font-medium mb-2">Active Merchants</h3>
+                          <p className="text-2xl font-bold text-green-600">{stats.activeMerchants}</p>
+                        </CardContent>
+                      </Card>
+                      <Card>
+                        <CardContent className="p-4">
+                          <h3 className="font-medium mb-2">Pending Approvals</h3>
+                          <p className="text-2xl font-bold text-yellow-600">{stats.pendingApprovals}</p>
+                        </CardContent>
+                      </Card>
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             </TabsContent>

@@ -1,29 +1,31 @@
-
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent } from "@/components/ui/card";
 import { Star } from "lucide-react";
 
 export const TestimonialsSection = () => {
+  const { t } = useTranslation();
+  
   const testimonials = [
     {
-      name: "Sarah Johnson",
-      role: "Working Mom",
-      content: "WashEasy has been a lifesaver! As a working mom of two, I was drowning in laundry. Now I have my weekends back and my clothes come back perfectly folded.",
+      name: t('testimonials.customers.sarah.name'),
+      role: t('testimonials.customers.sarah.role'),
+      content: t('testimonials.customers.sarah.content'),
       rating: 5,
-      location: "Downtown"
+      location: t('testimonials.customers.sarah.location')
     },
     {
-      name: "Michael Chen",
-      role: "Business Professional",
-      content: "The dry cleaning service is exceptional. My suits have never looked better, and the pickup/delivery fits perfectly into my busy schedule.",
+      name: t('testimonials.customers.michael.name'),
+      role: t('testimonials.customers.michael.role'),
+      content: t('testimonials.customers.michael.content'),
       rating: 5,
-      location: "Financial District"
+      location: t('testimonials.customers.michael.location')
     },
     {
-      name: "Emma Rodriguez",
-      role: "College Student",
-      content: "Affordable, reliable, and they even handle my delicate vintage pieces with care. The student discount is a huge bonus!",
+      name: t('testimonials.customers.emma.name'),
+      role: t('testimonials.customers.emma.role'),
+      content: t('testimonials.customers.emma.content'),
       rating: 5,
-      location: "University Area"
+      location: t('testimonials.customers.emma.location')
     }
   ];
 
@@ -32,10 +34,10 @@ export const TestimonialsSection = () => {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            What Our Customers Say
+            {t('testimonials.title')}
           </h2>
           <p className="text-xl text-gray-600">
-            Join thousands of satisfied customers who trust WashEasy
+            {t('testimonials.subtitle')}
           </p>
         </div>
         

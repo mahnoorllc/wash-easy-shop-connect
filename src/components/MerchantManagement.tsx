@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -40,6 +41,7 @@ interface Merchant {
 }
 
 export const MerchantManagement = () => {
+  const { t } = useTranslation();
   const [merchants, setMerchants] = useState<Merchant[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('pending');
@@ -60,7 +62,7 @@ export const MerchantManagement = () => {
       setMerchants(data || []);
     } catch (error) {
       console.error('Error fetching merchants:', error);
-      toast.error('Failed to load merchants');
+      toast.error(t('admin.merchantManagement.loadError'));
     } finally {
       setLoading(false);
     }
@@ -79,11 +81,11 @@ export const MerchantManagement = () => {
 
       if (error) throw error;
       
-      toast.success('Merchant approved successfully');
+      toast.success(t('admin.merchantManagement.approveSuccess'));
       fetchMerchants();
     } catch (error) {
       console.error('Error approving merchant:', error);
-      toast.error('Failed to approve merchant');
+      toast.error(t('admin.merchantManagement.updateError'));
     }
   };
 
@@ -100,11 +102,11 @@ export const MerchantManagement = () => {
 
       if (error) throw error;
       
-      toast.success('Merchant rejected');
+      toast.success(t('admin.merchantManagement.rejectSuccess'));
       fetchMerchants();
     } catch (error) {
       console.error('Error rejecting merchant:', error);
-      toast.error('Failed to reject merchant');
+      toast.error(t('admin.merchantManagement.updateError'));
     }
   };
 
@@ -120,21 +122,21 @@ export const MerchantManagement = () => {
 
       if (error) throw error;
       
-      toast.success(`Merchant ${!currentStatus ? 'activated' : 'deactivated'}`);
+      toast.success(t(`admin.merchantManagement.${!currentStatus ? 'activateSuccess' : 'deactivateSuccess'}`));
       fetchMerchants();
     } catch (error) {
       console.error('Error updating merchant status:', error);
-      toast.error('Failed to update merchant status');
+      toast.error(t('admin.merchantManagement.updateError'));
     }
   };
 
   const getStatusBadge = (merchant: Merchant) => {
     if (merchant.is_approved && merchant.is_active) {
-      return <Badge className="bg-green-100 text-green-800">Approved</Badge>;
+      return <Badge className="bg-green-100 text-green-800">{t('common.approved')}</Badge>;
     } else if (!merchant.is_approved && merchant.is_active) {
-      return <Badge className="bg-yellow-100 text-yellow-800">Pending</Badge>;
+      return <Badge className="bg-yellow-100 text-yellow-800">{t('common.pending')}</Badge>;
     } else {
-      return <Badge className="bg-red-100 text-red-800">Rejected</Badge>;
+      return <Badge className="bg-red-100 text-red-800">{t('common.rejected')}</Badge>;
     }
   };
 
@@ -146,19 +148,19 @@ export const MerchantManagement = () => {
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>Business Name</TableHead>
-          <TableHead>Contact</TableHead>
-          <TableHead>Location</TableHead>
-          <TableHead>Services</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead>Actions</TableHead>
+          <TableHead>{t('admin.merchantManagement.businessName')}</TableHead>
+          <TableHead>{t('admin.merchantManagement.contact')}</TableHead>
+          <TableHead>{t('admin.merchantManagement.location')}</TableHead>
+          <TableHead>{t('admin.merchantManagement.services')}</TableHead>
+          <TableHead>{t('admin.merchantManagement.status')}</TableHead>
+          <TableHead>{t('admin.merchantManagement.actions')}</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {merchantList.length === 0 ? (
           <TableRow>
             <TableCell colSpan={6} className="text-center text-muted-foreground">
-              No merchants found
+              {t('admin.merchantManagement.noMerchants')}
             </TableCell>
           </TableRow>
         ) : (
@@ -213,7 +215,7 @@ export const MerchantManagement = () => {
                         onClick={() => approveMerchant(merchant.id)}
                       >
                         <CheckCircle className="w-4 h-4 mr-1" />
-                        Approve
+                        {t('common.approve')}
                       </Button>
                       <Button
                         size="sm"
@@ -221,7 +223,7 @@ export const MerchantManagement = () => {
                         onClick={() => rejectMerchant(merchant.id)}
                       >
                         <XCircle className="w-4 h-4 mr-1" />
-                        Reject
+                        {t('common.reject')}
                       </Button>
                     </>
                   )}
@@ -231,7 +233,7 @@ export const MerchantManagement = () => {
                       variant="outline"
                       onClick={() => toggleMerchantStatus(merchant.id, merchant.is_active)}
                     >
-                      {merchant.is_active ? 'Deactivate' : 'Activate'}
+                      {merchant.is_active ? t('common.deactivate') : t('common.activate')}
                     </Button>
                   )}
                 </div>
@@ -260,7 +262,7 @@ export const MerchantManagement = () => {
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-muted-foreground">Pending Approval</p>
+                <p className="text-sm font-medium text-muted-foreground">{t('admin.merchantManagement.pendingApproval')}</p>
                 <p className="text-3xl font-bold text-yellow-600">{pendingMerchants.length}</p>
               </div>
               <Clock className="h-8 w-8 text-yellow-600" />
@@ -271,7 +273,7 @@ export const MerchantManagement = () => {
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-muted-foreground">Approved</p>
+                <p className="text-sm font-medium text-muted-foreground">{t('common.approved')}</p>
                 <p className="text-3xl font-bold text-green-600">{approvedMerchants.length}</p>
               </div>
               <CheckCircle className="h-8 w-8 text-green-600" />
@@ -282,7 +284,7 @@ export const MerchantManagement = () => {
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-muted-foreground">Rejected</p>
+                <p className="text-sm font-medium text-muted-foreground">{t('common.rejected')}</p>
                 <p className="text-3xl font-bold text-red-600">{rejectedMerchants.length}</p>
               </div>
               <XCircle className="h-8 w-8 text-red-600" />
@@ -297,7 +299,7 @@ export const MerchantManagement = () => {
             <div className="flex items-center gap-2">
               <AlertCircle className="h-5 w-5 text-yellow-600" />
               <CardTitle className="text-yellow-900">
-                {pendingMerchants.length} Merchant{pendingMerchants.length !== 1 ? 's' : ''} Awaiting Approval
+                {pendingMerchants.length} {t('admin.merchantManagement.awaitingApproval')}
               </CardTitle>
             </div>
           </CardHeader>
@@ -306,22 +308,22 @@ export const MerchantManagement = () => {
 
       <Card>
         <CardHeader>
-          <CardTitle>Merchant Management</CardTitle>
+          <CardTitle>{t('admin.merchantManagement.title')}</CardTitle>
         </CardHeader>
         <CardContent>
           <Tabs value={activeTab} onValueChange={setActiveTab}>
             <TabsList className="grid w-full grid-cols-3">
               <TabsTrigger value="pending" className="relative">
-                Pending
+                {t('common.pending')}
                 {pendingMerchants.length > 0 && (
                   <Badge className="ml-2 bg-yellow-600">{pendingMerchants.length}</Badge>
                 )}
               </TabsTrigger>
               <TabsTrigger value="approved">
-                Approved ({approvedMerchants.length})
+                {t('common.approved')} ({approvedMerchants.length})
               </TabsTrigger>
               <TabsTrigger value="rejected">
-                Rejected ({rejectedMerchants.length})
+                {t('common.rejected')} ({rejectedMerchants.length})
               </TabsTrigger>
             </TabsList>
 

@@ -1,4 +1,4 @@
-
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -6,34 +6,47 @@ import { Truck, ShoppingBag, Users, Clock, Star, Shield, Building2 } from "lucid
 import { useNavigate } from "react-router-dom";
 
 export const ServiceCards = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const services = [
     {
       icon: <Truck className="w-8 h-8 text-blue-600" />,
-      title: "Laundry Service",
-      description: "Professional pickup, wash, and delivery service by trusted local partners",
-      features: ["Same-day service", "Quality guarantee", "Eco-friendly products"],
-      price: "From $15/load",
-      badge: "Most Popular",
+      title: t('services.laundryService.title'),
+      description: t('services.laundryService.description'),
+      features: [
+        t('services.laundryService.features.0'),
+        t('services.laundryService.features.1'),
+        t('services.laundryService.features.2')
+      ],
+      price: t('services.laundryService.price'),
+      badge: t('services.laundryService.badge'),
       action: () => navigate('/customer-dashboard')
     },
     {
       icon: <ShoppingBag className="w-8 h-8 text-green-600" />,
-      title: "Accessory Shop",
-      description: "Premium laundry accessories, detergents, and supplies delivered to your door",
-      features: ["Premium brands", "Bulk discounts", "Fast delivery"],
-      price: "Free shipping $50+",
-      badge: "New",
+      title: t('services.accessoryShop.title'),
+      description: t('services.accessoryShop.description'),
+      features: [
+        t('services.accessoryShop.features.0'),
+        t('services.accessoryShop.features.1'),
+        t('services.accessoryShop.features.2')
+      ],
+      price: t('services.accessoryShop.price'),
+      badge: t('services.accessoryShop.badge'),
       action: () => navigate('/shop')
     },
     {
       icon: <Building2 className="w-8 h-8 text-purple-600" />,
-      title: "Commercial Services",
-      description: "Bulk laundry solutions for businesses, hotels, and restaurants",
-      features: ["Custom pricing", "Flexible scheduling", "Volume discounts"],
-      price: "Get Custom Quote",
-      badge: "Enterprise",
+      title: t('services.commercialServices.title'),
+      description: t('services.commercialServices.description'),
+      features: [
+        t('services.commercialServices.features.0'),
+        t('services.commercialServices.features.1'),
+        t('services.commercialServices.features.2')
+      ],
+      price: t('services.commercialServices.price'),
+      badge: t('services.commercialServices.badge'),
       action: () => navigate('/commercial-services')
     }
   ];
@@ -43,10 +56,10 @@ export const ServiceCards = () => {
       <div className="max-w-7xl mx-auto">
         <div className="text-center space-y-4 mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
-            Everything You Need for Perfect Laundry
+            {t('services.sectionTitle')}
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            From personal cleaning services to commercial solutions and premium accessories
+            {t('services.sectionSubtitle')}
           </p>
         </div>
 
@@ -94,7 +107,7 @@ export const ServiceCards = () => {
                     className="w-full bg-blue-600 hover:bg-blue-700 group-hover:scale-105 transition-transform"
                     onClick={service.action}
                   >
-                    Get Started
+                    {t('common.getStarted')}
                   </Button>
                 </div>
               </CardContent>
@@ -109,23 +122,23 @@ export const ServiceCards = () => {
         <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           <div className="space-y-2">
             <Clock className="w-8 h-8 text-blue-600 mx-auto" />
-            <h3 className="font-semibold text-gray-900">24hr Service</h3>
-            <p className="text-sm text-gray-600">Quick turnaround</p>
+            <h3 className="font-semibold text-gray-900">{t('services.features24hr')}</h3>
+            <p className="text-sm text-gray-600">{t('services.features24hrDesc')}</p>
           </div>
           <div className="space-y-2">
             <Shield className="w-8 h-8 text-green-600 mx-auto" />
-            <h3 className="font-semibold text-gray-900">Insured</h3>
-            <p className="text-sm text-gray-600">100% protected</p>
+            <h3 className="font-semibold text-gray-900">{t('services.featuresInsured')}</h3>
+            <p className="text-sm text-gray-600">{t('services.featuresInsuredDesc')}</p>
           </div>
           <div className="space-y-2">
             <Star className="w-8 h-8 text-yellow-600 mx-auto" />
-            <h3 className="font-semibold text-gray-900">Top Rated</h3>
-            <p className="text-sm text-gray-600">4.9/5 stars</p>
+            <h3 className="font-semibold text-gray-900">{t('services.featuresTopRated')}</h3>
+            <p className="text-sm text-gray-600">{t('services.featuresTopRatedDesc')}</p>
           </div>
           <div className="space-y-2">
             <Users className="w-8 h-8 text-purple-600 mx-auto" />
-            <h3 className="font-semibold text-gray-900">Trusted</h3>
-            <p className="text-sm text-gray-600">500+ partners</p>
+            <h3 className="font-semibold text-gray-900">{t('services.featuresTrusted')}</h3>
+            <p className="text-sm text-gray-600">{t('services.featuresTrustedDesc')}</p>
           </div>
         </div>
       </div>

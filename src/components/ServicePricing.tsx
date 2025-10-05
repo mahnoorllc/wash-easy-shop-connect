@@ -1,5 +1,5 @@
-
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { useServicePricing } from '@/hooks/useServicePricing';
@@ -14,6 +14,7 @@ export const ServicePricing: React.FC<ServicePricingProps> = ({
   selectedServiceType,
   compact = false 
 }) => {
+  const { t } = useTranslation();
   const { pricing, loading, error } = useServicePricing();
 
   if (loading) {
@@ -27,7 +28,7 @@ export const ServicePricing: React.FC<ServicePricingProps> = ({
   if (error) {
     return (
       <div className="text-sm text-red-600 p-4">
-        Unable to load pricing information
+        {t('servicePricing.unableToLoad')}
       </div>
     );
   }
@@ -55,7 +56,7 @@ export const ServicePricing: React.FC<ServicePricingProps> = ({
       <div className="bg-green-50 p-3 rounded-lg">
         <div className="flex items-center space-x-2 mb-2">
           <DollarSign className="w-4 h-4 text-green-600" />
-          <span className="font-medium text-green-800">Pricing</span>
+          <span className="font-medium text-green-800">{t('servicePricing.pricing')}</span>
         </div>
         <div className="space-y-1">
           {relevantPricing.slice(0, 2).map((price) => (
@@ -78,7 +79,7 @@ export const ServicePricing: React.FC<ServicePricingProps> = ({
       <CardHeader className="pb-3">
         <CardTitle className="text-lg flex items-center space-x-2">
           <DollarSign className="w-5 h-5 text-green-600" />
-          <span>Service Pricing</span>
+          <span>{t('servicePricing.title')}</span>
         </CardTitle>
       </CardHeader>
       <CardContent>

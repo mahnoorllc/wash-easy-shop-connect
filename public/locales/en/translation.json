@@ -145,6 +145,148 @@
     "error": "An error occurred",
     "success": "Success!",
     "warning": "Warning",
-    "info": "Information"
+    "info": "Information",
+    "getStarted": "Get Started",
+    "activate": "Activate",
+    "deactivate": "Deactivate",
+    "approve": "Approve",
+    "reject": "Reject",
+    "approved": "Approved",
+    "rejected": "Rejected",
+    "pending": "Pending",
+    "active": "Active",
+    "inactive": "Inactive"
+  },
+  "admin": {
+    "dashboard": "Admin Dashboard",
+    "subtitle": "Monitor and manage your WashEasy platform",
+    "overview": "Overview",
+    "merchants": "Merchants",
+    "products": "Products",
+    "sales": "Sales",
+    "users": "Users",
+    "health": "Site Health",
+    "settings": "Settings",
+    "totalRevenue": "Total Revenue",
+    "totalCustomers": "Total Customers",
+    "activeMerchants": "Active Merchants",
+    "pendingApprovals": "Pending Approvals",
+    "orderStats": "Order Statistics",
+    "pendingOrders": "Pending",
+    "processingOrders": "In Progress",
+    "completedOrders": "Completed",
+    "issueOrders": "Issues",
+    "quickStats": "Quick Stats",
+    "pendingQuotes": "Pending Quotes",
+    "totalProducts": "Total Products",
+    "activeProducts": "Active Products",
+    "merchantManagement": {
+      "title": "Merchant Management",
+      "pendingApproval": "Pending Approval",
+      "awaitingApproval": "Awaiting Approval",
+      "businessName": "Business Name",
+      "contact": "Contact",
+      "location": "Location",
+      "services": "Services",
+      "status": "Status",
+      "actions": "Actions",
+      "noMerchants": "No merchants found",
+      "approveSuccess": "Merchant approved successfully",
+      "rejectSuccess": "Merchant rejected",
+      "activateSuccess": "Merchant activated",
+      "deactivateSuccess": "Merchant deactivated",
+      "loadError": "Failed to load merchants",
+      "updateError": "Failed to update merchant status"
+    },
+    "userManagement": {
+      "title": "User Management",
+      "description": "Manage customer accounts, merchant registrations, and user permissions."
+    },
+    "orderManagement": {
+      "title": "Order Management",
+      "description": "Monitor order status, track deliveries, and manage customer requests."
+    },
+    "systemSettings": {
+      "title": "System Settings",
+      "platformConfig": "Platform Configuration",
+      "serviceAreas": "Service Areas",
+      "serviceAreasDesc": "Manage available service locations",
+      "configureAreas": "Configure Areas",
+      "pricingRules": "Pricing Rules",
+      "pricingRulesDesc": "Set base pricing and commission rates",
+      "updatePricing": "Update Pricing",
+      "security": "Security & Compliance",
+      "dataProtection": "Data Protection",
+      "dataProtectionDesc": "GDPR compliance and data retention policies",
+      "securityMonitoring": "Security Monitoring",
+      "securityMonitoringDesc": "Real-time security threat detection",
+      "enabled": "Enabled"
+    }
+  },
+  "services": {
+    "laundryService": {
+      "title": "Laundry Service",
+      "description": "Professional pickup, wash, and delivery service by trusted local partners",
+      "features": ["Same-day service", "Quality guarantee", "Eco-friendly products"],
+      "price": "From $15/load",
+      "badge": "Most Popular"
+    },
+    "accessoryShop": {
+      "title": "Accessory Shop",
+      "description": "Premium laundry accessories, detergents, and supplies delivered to your door",
+      "features": ["Premium brands", "Bulk discounts", "Fast delivery"],
+      "price": "Free shipping $50+",
+      "badge": "New"
+    },
+    "commercialServices": {
+      "title": "Commercial Services",
+      "description": "Bulk laundry solutions for businesses, hotels, and restaurants",
+      "features": ["Custom pricing", "Flexible scheduling", "Volume discounts"],
+      "price": "Get Custom Quote",
+      "badge": "Enterprise"
+    },
+    "sectionTitle": "Everything You Need for Perfect Laundry",
+    "sectionSubtitle": "From personal cleaning services to commercial solutions and premium accessories",
+    "features24hr": "24hr Service",
+    "features24hrDesc": "Quick turnaround",
+    "featuresInsured": "Insured",
+    "featuresInsuredDesc": "100% protected",
+    "featuresTopRated": "Top Rated",
+    "featuresTopRatedDesc": "4.9/5 stars",
+    "featuresTrusted": "Trusted",
+    "featuresTrustedDesc": "500+ partners"
+  },
+  "testimonials": {
+    "title": "What Our Customers Say",
+    "subtitle": "Join thousands of satisfied customers who trust WashEasy",
+    "customers": {
+      "sarah": {
+        "name": "Sarah Johnson",
+        "role": "Working Mom",
+        "content": "WashEasy has been a lifesaver! As a working mom of two, I was drowning in laundry. Now I have my weekends back and my clothes come back perfectly folded.",
+        "location": "Downtown"
+      },
+      "michael": {
+        "name": "Michael Chen",
+        "role": "Business Professional",
+        "content": "The dry cleaning service is exceptional. My suits have never looked better, and the pickup/delivery fits perfectly into my busy schedule.",
+        "location": "Financial District"
+      },
+      "emma": {
+        "name": "Emma Rodriguez",
+        "role": "College Student",
+        "content": "Affordable, reliable, and they even handle my delicate vintage pieces with care. The student discount is a huge bonus!",
+        "location": "University Area"
+      }
+    }
+  },
+  "servicePricing": {
+    "title": "Service Pricing",
+    "pricing": "Pricing",
+    "perItem": "per item",
+    "perLb": "per lb",
+    "bulkDiscount": "% off for",
+    "items": "items",
+    "unableToLoad": "Unable to load pricing information"
   }
 }

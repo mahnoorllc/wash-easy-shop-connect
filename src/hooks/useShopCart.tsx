@@ -44,7 +44,7 @@ export const useShopCart = () => {
     }, 0);
   };
 
-  const submitOrder = async (products: any[], deliveryAddress: string) => {
+  const submitOrder = async (products: any[], checkoutData: { deliveryAddress: string; phone: string; deliveryNotes?: string; paymentMethod: string }) => {
     if (!user) {
       toast({
         title: "Authentication Required",
@@ -81,8 +81,11 @@ export const useShopCart = () => {
           customer_id: user.id,
           items: items,
           total_amount: getTotalPrice(products),
-          delivery_address: deliveryAddress,
-          status: 'pending'
+          delivery_address: checkoutData.deliveryAddress,
+          status: 'pending',
+          phone: checkoutData.phone,
+          delivery_notes: checkoutData.deliveryNotes || null,
+          payment_method: checkoutData.paymentMethod
         });
 
       if (error) throw error;

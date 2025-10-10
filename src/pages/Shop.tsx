@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
-import { CheckoutDialog } from "@/components/CheckoutDialog";
+import { CheckoutDialog, CheckoutData } from "@/components/CheckoutDialog";
 import { ShoppingBag, Search, Filter, Plus, Minus, User } from "lucide-react";
 import { useProducts } from "@/hooks/useProducts";
 import { useShopCart } from "@/hooks/useShopCart";
@@ -38,12 +38,22 @@ const Shop = () => {
     return matchesSearch && matchesCategory;
   });
 
-  const handleCheckout = async (deliveryAddress: string) => {
+  const handleCheckout = async (data: CheckoutData) => {
     if (!user) {
-      // This shouldn't happen as CheckoutDialog handles auth, but just in case
       return false;
     }
-    return await submitOrder(products, deliveryAddress);
+    return await submitOrder(products, data);
+  };
+
+  const getCartItems = () => {
+    return Object.entries(cart).map(([productId, quantity]) => {
+      const product = products.find(p => p.id === productId);
+      return {
+        name: product?.name || 'Unknown',
+        quantity,
+        price: Number(product?.price || 0)
+      };
+    });
   };
 
   if (loading) {
@@ -88,6 +98,7 @@ const Shop = () => {
                       totalItems={getTotalItems()}
                       onCheckout={handleCheckout}
                       isSubmitting={isSubmitting}
+                      cartItems={getCartItems()}
                     />
                   ) : (
                     <Link to="/login">

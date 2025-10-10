@@ -345,8 +345,11 @@ export type Database = {
           created_at: string | null
           customer_id: string
           delivery_address: string
+          delivery_notes: string | null
           id: string
           items: Json
+          payment_method: string | null
+          phone: string | null
           status: string | null
           total_amount: number
         }
@@ -354,8 +357,11 @@ export type Database = {
           created_at?: string | null
           customer_id: string
           delivery_address: string
+          delivery_notes?: string | null
           id?: string
           items: Json
+          payment_method?: string | null
+          phone?: string | null
           status?: string | null
           total_amount: number
         }
@@ -363,8 +369,11 @@ export type Database = {
           created_at?: string | null
           customer_id?: string
           delivery_address?: string
+          delivery_notes?: string | null
           id?: string
           items?: Json
+          payment_method?: string | null
+          phone?: string | null
           status?: string | null
           total_amount?: number
         }
